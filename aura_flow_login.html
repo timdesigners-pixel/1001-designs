@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&display=swap" rel="stylesheet">
+</head>
+<body class="bg-[#0f111a] text-white font-['Inter'] min-h-screen flex items-center justify-center">
+  <div class="flex flex-col md:flex-row w-full h-screen overflow-hidden">
+    <!-- Left Hero -->
+    <div class="md:w-1/2 relative p-12 flex flex-col justify-between">
+      <div class="absolute inset-0 z-0">
+        <img src="https://images.unsplash.com/photo-1534067783941-51c9c23ecefd?auto=format&fit=crop&q=80" class="w-full h-full object-cover brightness-50">
+        <div class="absolute inset-0 bg-gradient-to-t from-[#0f111a] via-transparent to-transparent"></div>
+      </div>
+      <div class="relative z-10 flex items-center gap-2">
+        <span class="material-symbols-outlined text-white font-bold">change_history</span>
+        <span class="font-bold uppercase tracking-wider">AURA FLOW</span>
+      </div>
+      <div class="relative z-10 max-w-md">
+        <h2 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">Enter Your Flow State.</h2>
+        <p class="text-gray-300 text-lg leading-relaxed">A seamless, block-based workspace engineered for boundless clarity and execution.</p>
+      </div>
+    </div>
+    
+    <!-- Right Form -->
+    <div class="md:w-1/2 flex items-center justify-center p-8 md:p-20 bg-[#0f111a]">
+      <div class="w-full max-w-md">
+        <div class="mb-10">
+          <h1 class="text-3xl font-bold mb-2">Welcome Back!</h1>
+          <p class="text-gray-400">Welcome back! Please enter your details!</p>
+        </div>
+        
+        <form class="space-y-6">
+          <div>
+            <label class="block text-sm font-medium text-gray-300 mb-2">Email</label>
+            <input type="email" placeholder="Enter your email" class="w-full bg-white text-gray-900 rounded-xl py-3.5 px-4 outline-none focus:ring-2 focus:ring-blue-500">
+          </div>
+          <div>
+            <label class="block text-sm font-medium text-gray-300 mb-2">Password</label>
+            <div class="relative">
+              <input type="password" placeholder="Input password" class="w-full bg-white text-gray-900 rounded-xl py-3.5 px-4 outline-none focus:ring-2 focus:ring-blue-500">
+              <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-gray-600">visibility</span>
+            </div>
+          </div>
+          
+          <div class="flex items-center justify-between text-sm">
+            <label class="flex items-center gap-2 cursor-pointer">
+              <input type="checkbox" class="w-4 h-4 rounded bg-transparent border-gray-700">
+              <span class="text-gray-400">Remember me</span>
+            </label>
+            <a href="#" class="text-blue-400 hover:text-blue-300 transition-colors">Forgot password?</a>
+          </div>
+          
+          <button class="w-full bg-[#253c78] hover:bg-[#2d4991] text-white font-bold py-4 rounded-xl transition-all">
+            Log In
+          </button>
+          
+          <div class="relative py-4">
+            <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-gray-800"></div></div>
+            <div class="relative flex justify-center text-xs uppercase"><span class="bg-[#0f111a] px-3 text-gray-500">Or continue with</span></div>
+          </div>
+          
+          <div class="grid grid-cols-2 gap-4">
+            <button class="flex items-center justify-center gap-3 border border-gray-700 py-3 rounded-xl hover:bg-white/5 transition-all">
+              <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" class="w-5 h-5">
+              <span class="text-sm">Google</span>
+            </button>
+            <button class="flex items-center justify-center gap-3 border border-gray-700 py-3 rounded-xl hover:bg-white/5 transition-all">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.05 20.28c-.96.95-2.06 1.92-3.4 1.92-1.31 0-1.74-.81-3.29-.81-1.57 0-2.03.79-3.29.81-1.31.02-2.58-1.12-3.56-2.11C1.5 18.06.33 14.54.33 11.23c0-3.34 2.1-5.11 4.14-5.11 1.08 0 2.1.75 2.76.75.65 0 1.9-.9 3.23-.9 1.4 0 2.62.51 3.44 1.73-3.15 1.83-2.65 6.32 1.15 7.85-.75 2.11-1.89 4.54-4 4.73zM12.03 4.72c-.04-2.5 2.05-4.52 4.45-4.72.3 2.65-2.26 5.04-4.45 4.72z"/></svg>
+              <span class="text-sm">Apple</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
