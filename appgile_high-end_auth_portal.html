@@ -1,0 +1,122 @@
+<div class="min-h-screen flex font-['Inter',sans-serif] text-slate-800 antialiased">
+  <!-- Left Sidebar (Brand & Status) -->
+  <aside class="hidden lg:flex lg:w-[420px] xl:w-[480px] bg-[#2d3586] flex-col justify-between p-12 relative overflow-hidden shrink-0">
+    <!-- Abstract SVG Background Pattern -->
+    <div class="absolute inset-0 opacity-15 pointer-events-none select-none">
+      <svg width="100%" height="100%" viewBox="0 0 400 800" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0 40 Q50 10 100 40 T200 40 T300 40 T400 40 M0 120 Q50 90 100 120 T200 120 T300 120 T400 120 M0 200 Q50 170 100 200 T200 200 T300 200 T400 200 M20 20 L20 780 M100 20 L100 780 M180 20 L180 780 M260 20 L260 780 M340 20 L340 780" stroke="white" fill="none" stroke-width="1" stroke-dasharray="4 4" />
+        <circle cx="100" cy="100" r="30" stroke="white" fill="none" stroke-width="1.5" />
+        <rect x="220" y="250" width="60" height="40" stroke="white" fill="none" stroke-width="1.5" />
+        <path d="M50 400 L350 400 M50 450 L350 450 M50 500 L350 500" stroke="white" fill="none" stroke-width="1" opacity="0.5" />
+      </svg>
+    </div>
+
+    <!-- Logo Section -->
+    <div class="relative z-10">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
+          <span class="material-symbols-outlined text-[#2d3586] text-3xl font-bold">change_history</span>
+        </div>
+        <div>
+          <h2 class="text-white font-bold text-2xl tracking-tight leading-none">appgile</h2>
+          <p class="text-white/60 text-[10px] tracking-widest uppercase mt-1 font-medium">Developing Future</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Narrative Content -->
+    <div class="relative z-10 max-w-sm">
+      <h1 class="text-4xl xl:text-5xl font-bold text-white mb-6 leading-[1.1]">Check the Status</h1>
+      <p class="text-white/70 text-lg leading-relaxed font-light">
+        Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
+      </p>
+      <div class="flex gap-4 mt-8">
+        <div class="h-[2px] w-12 bg-white rounded-full"></div>
+        <div class="h-[2px] w-8 bg-white/30 rounded-full"></div>
+        <div class="h-[2px] w-8 bg-white/30 rounded-full"></div>
+      </div>
+    </div>
+
+    <!-- Sidebar Footer -->
+    <div class="relative z-10">
+      <div class="flex gap-6 mb-10 text-white/50">
+        <a href="#" class="hover:text-white transition-colors">f</a>
+        <a href="#" class="hover:text-white transition-colors">t</a>
+        <a href="#" class="hover:text-white transition-colors">in</a>
+      </div>
+      <div class="flex justify-between items-center text-xs font-medium tracking-wide text-white/40 border-t border-white/10 pt-6">
+        <div class="flex gap-6">
+          <a href="#" class="hover:text-white/80 transition-colors">Privacy Policy</a>
+          <a href="#" class="hover:text-white/80 transition-colors">Contact</a>
+        </div>
+        <span>©2018 Appgile</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Right Content (Form) -->
+  <main class="flex-1 bg-slate-50/50 flex flex-col items-center justify-center p-6 md:p-12 relative">
+    <!-- Floating Abstract Elements -->
+    <div class="absolute top-[15%] right-[10%] w-3 h-3 bg-blue-500 rotate-45 hidden md:block opacity-40"></div>
+    <div class="absolute bottom-[10%] right-[15%] w-4 h-4 bg-blue-600 rotate-12 hidden md:block opacity-30"></div>
+    <div class="absolute top-[30%] left-[5%] w-2 h-2 bg-sky-400 rounded-full hidden md:block opacity-20"></div>
+
+    <div class="w-full max-w-[480px] bg-white rounded-[40px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.05)] p-10 md:p-16 text-center">
+      <header class="mb-10">
+        <h2 class="text-[#4c73f8] text-3xl font-bold mb-3">Welcome To Appgile</h2>
+        <p class="text-slate-400 text-sm font-medium">Sign in by entering the informations below</p>
+      </header>
+
+      <form class="space-y-6 text-left">
+        <div class="space-y-1.5">
+          <label class="text-[13px] font-semibold text-slate-400 ml-1">Email Address</label>
+          <div class="relative group">
+            <input type="email" placeholder="mail@user.com" 
+              class="w-full px-5 py-3.5 bg-slate-50 border border-slate-100 rounded-xl focus:bg-white focus:border-[#4c73f8] focus:ring-4 focus:ring-blue-100 outline-none transition-all duration-300 text-slate-600 placeholder:text-slate-300" />
+          </div>
+        </div>
+
+        <div class="space-y-1.5">
+          <label class="text-[13px] font-semibold text-slate-400 ml-1">Password</label>
+          <div class="relative group">
+            <input type="password" value="••••••" 
+              class="w-full px-5 py-3.5 bg-slate-50 border border-slate-100 rounded-xl focus:bg-white focus:border-[#4c73f8] focus:ring-4 focus:ring-blue-100 outline-none transition-all duration-300 text-slate-600" />
+            <button type="button" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 hover:text-slate-500 transition-colors">
+              <span class="material-symbols-outlined text-lg">visibility</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between text-xs font-semibold">
+          <label class="flex items-center gap-2 cursor-pointer text-slate-400 hover:text-slate-500 transition-colors">
+            <input type="checkbox" class="w-4 h-4 rounded border-slate-200 text-[#4c73f8] focus:ring-[#4c73f8]" />
+            Remember Me
+          </label>
+          <a href="#" class="text-[#4c73f8] hover:underline decoration-2 underline-offset-4 transition-all">Forgotten Password</a>
+        </div>
+
+        <button class="w-full bg-[#527cfd] hover:bg-[#4068e6] text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2 transform active:scale-[0.98] transition-all">
+          <span class="material-symbols-outlined text-xl">lock</span>
+          SIGN IN
+        </button>
+
+        <!-- Social Logins -->
+        <div class="pt-8 flex flex-col md:flex-row gap-4">
+          <button class="flex-1 flex items-center justify-center gap-2 py-3 px-6 rounded-full border border-slate-50 bg-white shadow-[0_4px_12px_rgba(0,0,0,0.03)] hover:shadow-md transition-all text-sm font-semibold text-slate-500">
+            <span class="material-symbols-outlined text-lg text-red-500">g_mobiledata</span>
+            Google
+          </button>
+          <button class="flex-1 flex items-center justify-center gap-2 py-3 px-6 rounded-full border border-slate-50 bg-white shadow-[0_4px_12px_rgba(0,0,0,0.03)] hover:shadow-md transition-all text-sm font-semibold text-slate-500">
+             <span class="material-symbols-outlined text-lg text-blue-600">business</span>
+            LinkedIn
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Mobile Sidebar Replacement (Visible only on small screens) -->
+    <div class="lg:hidden mt-8 text-center">
+      <p class="text-slate-400 text-xs font-medium">©2018 Appgile • <a href="#" class="text-[#4c73f8]">Privacy Policy</a></p>
+    </div>
+  </main>
+</div>

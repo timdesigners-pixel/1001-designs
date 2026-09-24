@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Tract</title>
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #121212;
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #bf2578 0%, #fd6a45 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gradient-bg {
+            background: linear-gradient(90deg, #bf2578 0%, #fd6a45 100%);
+        }
+        /* Custom gradient border hack */
+        .gradient-border-wrapper {
+            position: relative;
+            padding: 1px;
+            border-radius: 0.5rem;
+            background: linear-gradient(90deg, rgba(191,37,120,0.5) 0%, rgba(253,106,69,0.5) 100%);
+        }
+        .inner-content {
+            background: #121212;
+            border-radius: calc(0.5rem - 1px);
+        }
+        .abstract-lines {
+            position: absolute;
+            right: -10%;
+            top: 20%;
+            width: 400px;
+            height: 400px;
+            opacity: 0.4;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="text-gray-100 overflow-x-hidden">
+
+    <!-- Background Ornament -->
+    <div class="abstract-lines hidden lg:block">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path fill="none" stroke="url(#lineGradient)" stroke-width="0.5" d="M40,100 Q60,10 100,100 T160,100" transform="rotate(45 100 100)" />
+            <path fill="none" stroke="url(#lineGradient)" stroke-width="0.5" d="M30,100 Q50,0 110,100 T170,100" transform="rotate(45 100 100) translate(10, 10)" />
+            <path fill="none" stroke="url(#lineGradient)" stroke-width="0.5" d="M20,100 Q40,-10 120,100 T180,100" transform="rotate(45 100 100) translate(20, 20)" />
+            <defs>
+                <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#bf2578;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#fd6a45;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+        </svg>
+    </div>
+
+    <div class="min-h-screen flex flex-col max-w-7xl mx-auto px-6 py-8 relative z-10">
+        
+        <!-- Header -->
+        <header class="flex items-center justify-between">
+            <div class="text-2xl font-bold tracking-tight">Tract.</div>
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">
+                <a href="#" class="hover:text-white transition-colors">Category</a>
+                <a href="#" class="hover:text-white transition-colors">Tract For Business</a>
+                <a href="#" class="hover:text-white transition-colors flex items-center gap-1.5">
+                    Teach on Tract
+                    <span class="px-1.5 py-0.5 rounded-full gradient-bg text-[10px] font-bold text-white">New</span>
+                </a>
+            </nav>
+            <div class="flex items-center gap-6">
+                <button class="material-symbols-outlined text-gray-400 hover:text-white transition-colors cursor-pointer">
+                    search
+                </button>
+                <button class="gradient-bg px-6 py-2 rounded-lg text-sm font-semibold shadow-lg shadow-pink-500/20 hover:scale-105 transition-transform">
+                    Sign up
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-1 flex flex-col items-center justify-center py-12">
+            
+            <!-- Hero Section -->
+            <div class="text-center mb-12">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Login to Your Account</h1>
+                <p class="text-gray-400 max-w-lg mx-auto leading-relaxed text-sm md:text-base">
+                    Choose from 130,000 online video courses with new additions published every second month
+                </p>
+            </div>
+
+            <!-- Split Form Layout -->
+            <div class="w-full max-w-4xl grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-8 md:gap-12 items-center">
+                
+                <!-- Left Side: Traditional Login -->
+                <div class="space-y-4">
+                    <div class="relative">
+                        <input type="text" placeholder="Teacher / Student ID" 
+                               class="w-full bg-[#1e1e1e] border-0 rounded-xl px-5 py-4 focus:ring-2 ring-pink-500/50 outline-none text-sm placeholder:text-gray-500">
+                        <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 text-xl">
+                            radio_button_unchecked
+                        </span>
+                    </div>
+                    
+                    <div class="relative">
+                        <input type="password" placeholder="8 Digit Pin" 
+                               class="w-full bg-[#1e1e1e] border-0 rounded-xl px-5 py-4 focus:ring-2 ring-pink-500/50 outline-none text-sm placeholder:text-gray-500">
+                        <span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 text-xl">
+                            visibility_off
+                        </span>
+                    </div>
+
+                    <button class="w-full gradient-bg flex items-center justify-between px-6 py-4 rounded-xl font-semibold shadow-lg shadow-pink-500/20 hover:opacity-90 transition-opacity">
+                        <span>Login to Your Account</span>
+                        <span class="material-symbols-outlined">
+                            arrow_forward
+                        </span>
+                    </button>
+                </div>
+
+                <!-- Divider -->
+                <div class="flex justify-center">
+                    <span class="text-gray-600 text-3xl font-light hidden md:block">/</span>
+                    <div class="flex md:hidden items-center w-full gap-4">
+                        <div class="h-px bg-gray-800 flex-1"></div>
+                        <span class="text-gray-500 text-sm">OR</span>
+                        <div class="h-px bg-gray-800 flex-1"></div>
+                    </div>
+                </div>
+
+                <!-- Right Side: Social Auth -->
+                <div class="space-y-3">
+                    <!-- Google -->
+                    <div class="gradient-border-wrapper">
+                        <button class="inner-content w-full flex items-center px-5 py-3 hover:bg-gray-800/50 transition-colors group">
+                           <span class="w-6 h-6 flex items-center justify-center">
+                               <svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor">
+                                   <path d="M12.48 10.92v3.28h7.84c-.24 1.84-.908 3.152-1.928 4.176-1.228 1.228-3.14 2.568-6.912 2.568-6.14 0-10.956-4.96-10.956-11s4.816-11 10.956-11c3.316 0 5.712 1.308 7.508 3.012l2.304-2.304C20.124 1.428 17.212 0 12.48 0 5.696 0 0 5.696 0 12.48s5.696 12.48 12.48 12.48c3.672 0 6.44-1.212 8.64-3.516 2.268-2.268 2.988-5.412 2.988-8.028 0-.78-.06-1.536-.18-2.256H12.48z"/>
+                               </svg>
+                           </span>
+                           <span class="ml-4 text-sm font-medium">Sign in with Google</span>
+                        </button>
+                    </div>
+
+                    <!-- Facebook -->
+                    <div class="gradient-border-wrapper">
+                        <button class="inner-content w-full flex items-center px-5 py-3 hover:bg-gray-800/50 transition-colors">
+                           <span class="w-6 h-6 flex items-center justify-center">
+                               <svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor">
+                                   <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                               </svg>
+                           </span>
+                           <span class="ml-4 text-sm font-medium">Sign in with Facebook</span>
+                        </button>
+                    </div>
+
+                    <!-- Apple -->
+                    <div class="gradient-border-wrapper">
+                        <button class="inner-content w-full flex items-center px-5 py-3 hover:bg-gray-800/50 transition-colors">
+                           <span class="w-6 h-6 flex items-center justify-center">
+                               <svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor">
+                                   <path d="M17.05 20.28c-.98.95-2.05 1.72-3.32 1.72-1.24 0-1.63-.78-3.13-.78-1.52 0-1.93.75-3.13.78-1.24.03-2.31-.83-3.32-1.72-2.12-2.07-3.73-5.83-3.73-9.1 0-3.26 1.63-5.31 4.1-5.31 1.24 0 2.21.66 2.92.66.72 0 1.83-.75 3.32-.75 1.55 0 3.01.78 3.88 2.05-3.13 1.6-2.61 6.06.63 7.42-.6 1.52-1.46 3.04-2.85 4.03zm-4.57-14.88c0-1.92 1.55-3.48 3.48-3.48.06 0 .15 0 .21.03-.12 2.1-1.66 3.79-3.42 3.79-.06 0-.15 0-.27-.03v-.31z"/>
+                               </svg>
+                           </span>
+                           <span class="ml-4 text-sm font-medium">Sign in with Apple Account</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Forgot Password -->
+            <div class="mt-12">
+                <a href="#" class="text-sm text-gray-400 hover:text-white transition-colors underline underline-offset-4 decoration-gray-600">
+                    Forgot Password?
+                </a>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="flex flex-col md:row items-center justify-between text-xs text-gray-500 py-4 gap-4">
+            <a href="#" class="hover:text-gray-300">Privacy Policy</a>
+            <div>Copyright@Tract 2021</div>
+        </footer>
+    </div>
+
+</body>
+</html>
