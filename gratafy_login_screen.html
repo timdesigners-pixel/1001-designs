@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gratafy Login</title>
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #121226;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .bg-gradient-custom {
+      background: radial-gradient(circle at center, #1e1e3f 0%, #121226 100%);
+    }
+  </style>
+</head>
+<body class="bg-gradient-custom text-white min-h-screen flex items-center justify-center p-6 overflow-hidden relative">
+
+  <!-- Abstract Background Shapes -->
+  <div class="absolute inset-0 pointer-events-none">
+    <!-- Diagonal rounded shapes -->
+    <div class="absolute top-[-10%] left-[20%] w-[120%] h-[300px] bg-[#1d1d3a] rounded-full rotate-[-40deg] opacity-40"></div>
+    <div class="absolute bottom-[10%] right-[10%] w-[150px] h-[500px] bg-[#1d1d3a] rounded-full rotate-[-40deg] opacity-30"></div>
+    <!-- Circle shape -->
+    <div class="absolute bottom-[20%] left-[15%] w-32 h-32 bg-[#1d1d3a] rounded-full opacity-50"></div>
+    <!-- Cross icons -->
+    <span class="material-symbols-outlined absolute top-20 left-1/4 text-white/10 text-2xl">add</span>
+    <span class="material-symbols-outlined absolute bottom-10 right-10 text-white/10 text-2xl">add</span>
+    <span class="material-symbols-outlined absolute top-1/2 right-1/4 text-white/5 text-xl">add</span>
+  </div>
+
+  <!-- Main Content -->
+  <div class="w-full max-w-md z-10 flex flex-col items-center">
+    
+    <!-- Logo -->
+    <div class="mb-10 flex items-baseline">
+      <h1 class="text-5xl font-extrabold tracking-tighter text-white">gratafy<span class="text-xs font-normal align-top ml-0.5 opacity-60">TM</span></h1>
+    </div>
+
+    <!-- Login Card -->
+    <div class="w-full bg-[#1e1e35]/80 backdrop-blur-sm p-8 rounded-2xl shadow-2xl border border-white/5">
+      <form class="space-y-4">
+        <!-- Email Field -->
+        <div class="group bg-[#33334d] p-3 rounded-lg border border-transparent focus-within:border-white/20 transition-all">
+          <label class="block text-[10px] font-bold text-gray-400 tracking-widest mb-1 uppercase">Email Address</label>
+          <input 
+            type="email" 
+            value="hello@samuelmay.co" 
+            class="w-full bg-transparent border-none outline-none text-white text-sm font-medium"
+            placeholder="your@email.com"
+          >
+        </div>
+
+        <!-- Password Field -->
+        <div class="group bg-[#33334d] p-3 rounded-lg border border-transparent focus-within:border-white/20 transition-all">
+          <label class="block text-[10px] font-bold text-gray-400 tracking-widest mb-1 uppercase">Password</label>
+          <input 
+            type="password" 
+            value="password123" 
+            class="w-full bg-transparent border-none outline-none text-white text-sm font-medium"
+            placeholder="••••••••"
+          >
+        </div>
+
+        <!-- Login Button -->
+        <div class="pt-4 flex justify-center">
+          <button type="submit" class="flex items-center gap-2 bg-white text-[#121226] px-8 py-2.5 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-gray-200 transition-colors cursor-pointer group">
+            Log In
+            <span class="flex items-center justify-center bg-[#4ea8de] text-white w-5 h-5 rounded-full">
+                <span class="material-symbols-outlined text-[14px] font-black">chevron_right</span>
+            </span>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Forgot Password Link -->
+    <a href="#" class="mt-8 text-[11px] font-bold text-white/50 hover:text-white uppercase tracking-[0.2em] transition-colors border-b border-white/20 pb-0.5">
+      Forgot your password?
+    </a>
+  </div>
+
+</body>
+</html>
