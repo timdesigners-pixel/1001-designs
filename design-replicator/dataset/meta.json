@@ -1,0 +1,479 @@
+{
+  "name": "1001 component reference set",
+  "version": "1.0.0",
+  "count": 1001,
+  "interactive": 649,
+  "license": "MIT",
+  "generator": "tools/build-dataset.mjs (deterministic: hand-written component templates x layout variants x 14 palettes x radius/shadow/font/density tokens)",
+  "categories": [
+    {
+      "category": "button",
+      "title": "Button",
+      "layouts": [
+        "Solid",
+        "Outline",
+        "Soft",
+        "Icon"
+      ],
+      "count": 24
+    },
+    {
+      "category": "badge",
+      "title": "Badge",
+      "layouts": [
+        "Pill",
+        "Dot",
+        "Outlined"
+      ],
+      "count": 24
+    },
+    {
+      "category": "alert",
+      "title": "Alert",
+      "layouts": [
+        "Inline",
+        "Left accent",
+        "Banner"
+      ],
+      "count": 24
+    },
+    {
+      "category": "card",
+      "title": "Card",
+      "layouts": [
+        "Basic",
+        "Media top",
+        "Horizontal"
+      ],
+      "count": 24
+    },
+    {
+      "category": "product-card",
+      "title": "Product card",
+      "layouts": [
+        "Grid",
+        "Minimal"
+      ],
+      "count": 24
+    },
+    {
+      "category": "profile-card",
+      "title": "Profile card",
+      "layouts": [
+        "Centered",
+        "Cover"
+      ],
+      "count": 24
+    },
+    {
+      "category": "pricing-card",
+      "title": "Pricing card",
+      "layouts": [
+        "Single",
+        "Three tiers"
+      ],
+      "count": 24
+    },
+    {
+      "category": "navbar",
+      "title": "Navbar",
+      "layouts": [
+        "Classic",
+        "Centered logo",
+        "With search"
+      ],
+      "count": 24
+    },
+    {
+      "category": "hero",
+      "title": "Hero section",
+      "layouts": [
+        "Centered",
+        "Split",
+        "Stats"
+      ],
+      "count": 24
+    },
+    {
+      "category": "footer",
+      "title": "Footer",
+      "layouts": [
+        "Columns",
+        "Simple"
+      ],
+      "count": 24
+    },
+    {
+      "category": "login-form",
+      "title": "Login form",
+      "layouts": [
+        "Basic",
+        "Split"
+      ],
+      "count": 24
+    },
+    {
+      "category": "signup-form",
+      "title": "Signup form",
+      "layouts": [
+        "Strength meter"
+      ],
+      "count": 24
+    },
+    {
+      "category": "contact-form",
+      "title": "Contact form",
+      "layouts": [
+        "Counter",
+        "Floating labels"
+      ],
+      "count": 24
+    },
+    {
+      "category": "search-bar",
+      "title": "Search bar",
+      "layouts": [
+        "Simple",
+        "Live filter"
+      ],
+      "count": 24
+    },
+    {
+      "category": "modal",
+      "title": "Modal dialog",
+      "layouts": [
+        "Confirm",
+        "Form"
+      ],
+      "count": 24
+    },
+    {
+      "category": "dropdown",
+      "title": "Dropdown",
+      "layouts": [
+        "Action menu",
+        "Custom select"
+      ],
+      "count": 24
+    },
+    {
+      "category": "tabs",
+      "title": "Tabs",
+      "layouts": [
+        "Underline",
+        "Pills"
+      ],
+      "count": 24
+    },
+    {
+      "category": "accordion",
+      "title": "Accordion",
+      "layouts": [
+        "Single open",
+        "Multi open"
+      ],
+      "count": 24
+    },
+    {
+      "category": "carousel",
+      "title": "Carousel",
+      "layouts": [
+        "Slides",
+        "Fade + thumbs"
+      ],
+      "count": 24
+    },
+    {
+      "category": "toast",
+      "title": "Toast notification",
+      "layouts": [
+        "Stack",
+        "Snackbar undo"
+      ],
+      "count": 24
+    },
+    {
+      "category": "toggle",
+      "title": "Toggle switch",
+      "layouts": [
+        "Switch list",
+        "Segmented"
+      ],
+      "count": 24
+    },
+    {
+      "category": "checklist",
+      "title": "Checklist",
+      "layouts": [
+        "Task list",
+        "Radio cards"
+      ],
+      "count": 24
+    },
+    {
+      "category": "progress",
+      "title": "Progress",
+      "layouts": [
+        "Bars",
+        "Steps"
+      ],
+      "count": 24
+    },
+    {
+      "category": "stats",
+      "title": "Stats / KPI",
+      "layouts": [
+        "KPI cards",
+        "Inline"
+      ],
+      "count": 24
+    },
+    {
+      "category": "testimonial",
+      "title": "Testimonial",
+      "layouts": [
+        "Quote card",
+        "Grid"
+      ],
+      "count": 24
+    },
+    {
+      "category": "features",
+      "title": "Feature section",
+      "layouts": [
+        "Icon grid",
+        "List"
+      ],
+      "count": 24
+    },
+    {
+      "category": "timeline",
+      "title": "Timeline",
+      "layouts": [
+        "Vertical",
+        "Horizontal"
+      ],
+      "count": 24
+    },
+    {
+      "category": "table",
+      "title": "Data table",
+      "layouts": [
+        "Basic",
+        "Sortable"
+      ],
+      "count": 24
+    },
+    {
+      "category": "pagination",
+      "title": "Pagination",
+      "layouts": [
+        "Numbers",
+        "Compact"
+      ],
+      "count": 24
+    },
+    {
+      "category": "breadcrumb",
+      "title": "Breadcrumb",
+      "layouts": [
+        "Chevron",
+        "Slash pill"
+      ],
+      "count": 24
+    },
+    {
+      "category": "avatar",
+      "title": "Avatar",
+      "layouts": [
+        "Group",
+        "Status"
+      ],
+      "count": 24
+    },
+    {
+      "category": "tooltip",
+      "title": "Tooltip / Popover",
+      "layouts": [
+        "Hover tooltip",
+        "Click popover"
+      ],
+      "count": 24
+    },
+    {
+      "category": "skeleton",
+      "title": "Skeleton loader",
+      "layouts": [
+        "Card",
+        "List"
+      ],
+      "count": 24
+    },
+    {
+      "category": "empty-state",
+      "title": "Empty state",
+      "layouts": [
+        "Illustration",
+        "Dashed"
+      ],
+      "count": 24
+    },
+    {
+      "category": "cta",
+      "title": "Call to action",
+      "layouts": [
+        "Banner",
+        "Split"
+      ],
+      "count": 24
+    },
+    {
+      "category": "sidebar",
+      "title": "Sidebar",
+      "layouts": [
+        "Collapsible",
+        "Icon rail"
+      ],
+      "count": 23
+    },
+    {
+      "category": "chat",
+      "title": "Chat widget",
+      "layouts": [
+        "Support chat",
+        "Messenger"
+      ],
+      "count": 23
+    },
+    {
+      "category": "rating",
+      "title": "Rating",
+      "layouts": [
+        "Stars",
+        "Thumbs"
+      ],
+      "count": 23
+    },
+    {
+      "category": "quantity",
+      "title": "Quantity stepper",
+      "layouts": [
+        "Counter",
+        "Cart line"
+      ],
+      "count": 23
+    },
+    {
+      "category": "gallery",
+      "title": "Image gallery",
+      "layouts": [
+        "Grid lightbox",
+        "Masonry"
+      ],
+      "count": 23
+    },
+    {
+      "category": "newsletter",
+      "title": "Newsletter signup",
+      "layouts": [
+        "Inline",
+        "Card"
+      ],
+      "count": 23
+    },
+    {
+      "category": "pricing-toggle",
+      "title": "Billing toggle",
+      "layouts": [
+        "Monthly / yearly"
+      ],
+      "count": 23
+    }
+  ],
+  "palettes": [
+    {
+      "name": "Ocean",
+      "mode": "light",
+      "primary": "#1769e0"
+    },
+    {
+      "name": "Sunset",
+      "mode": "light",
+      "primary": "#c93b16"
+    },
+    {
+      "name": "Forest",
+      "mode": "light",
+      "primary": "#1b7a42"
+    },
+    {
+      "name": "Lavender",
+      "mode": "light",
+      "primary": "#6c3fe8"
+    },
+    {
+      "name": "Mono",
+      "mode": "light",
+      "primary": "#111111"
+    },
+    {
+      "name": "Pinterest",
+      "mode": "light",
+      "primary": "#e60023"
+    },
+    {
+      "name": "Slate",
+      "mode": "light",
+      "primary": "#334155"
+    },
+    {
+      "name": "Mint",
+      "mode": "light",
+      "primary": "#0b7d6b"
+    },
+    {
+      "name": "Rose",
+      "mode": "light",
+      "primary": "#c2255c"
+    },
+    {
+      "name": "Sand",
+      "mode": "light",
+      "primary": "#9c5a14"
+    },
+    {
+      "name": "Midnight",
+      "mode": "dark",
+      "primary": "#7b97ff"
+    },
+    {
+      "name": "Neon",
+      "mode": "dark",
+      "primary": "#39ff88"
+    },
+    {
+      "name": "Espresso",
+      "mode": "dark",
+      "primary": "#e8a05a"
+    },
+    {
+      "name": "Graphite",
+      "mode": "dark",
+      "primary": "#ff4d67"
+    }
+  ],
+  "schema": [
+    "id",
+    "category",
+    "categoryTitle",
+    "name",
+    "layout",
+    "tags",
+    "description",
+    "tokens",
+    "interactive",
+    "html",
+    "css",
+    "js"
+  ]
+}

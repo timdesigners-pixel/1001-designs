@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<script src="../lib/theme-init.js"></script>
+<link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <header>
+    <div class="logo"></div>
+    <div>
+      <h1>Design Replicator</h1>
+      <p id="where">…</p>
+    </div>
+  </header>
+  <main>
+    <button class="card pin" data-mode="pin">
+      <b>Pinterest pin / görsel → HTML tasarım</b>
+      <span>Pin ya da görsel URL'sini analiz edip HTML/CSS/JS dökümü verir</span>
+    </button>
+    <button class="card" data-mode="tab">
+      <b>Bu sekmeyi birebir klonla</b>
+      <span>DOM + CSS + görseller + fontlar, tek dosya HTML / ZIP</span>
+    </button>
+    <button class="card" data-mode="tab-ai">
+      <b>Bu sekmeyi yapay zekâ ile yeniden yaz</b>
+      <span>Temiz kod + çalışan etkileşimler (Claude / Ollama / LM Studio)</span>
+    </button>
+    <button class="card" data-mode="image">
+      <b>Görsel → renk paleti + pin sayfası</b>
+      <span>Modelsiz; dosya yükle veya sürükle</span>
+    </button>
+  </main>
+  <footer><a href="#" id="opts">Ayarlar (model, API anahtarı, yerel sunucu)</a><button class="theme-btn" id="theme-btn" type="button">◐ Otomatik</button></footer>
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

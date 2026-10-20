@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Design Replicator — Ayarlar</title>
+<script src="../lib/theme-init.js"></script>
+<link rel="stylesheet" href="options.css">
+</head>
+<body>
+<main>
+  <div class="head"><h1>Design Replicator · Ayarlar</h1><button class="theme-btn" id="theme-btn" type="button">◐ Otomatik</button></div>
+
+  <section>
+    <h2>Yapay zekâ sağlayıcısı</h2>
+    <p class="hint">Yalnızca "AI ile yeniden yaz" ve "Pin / görsel → HTML tasarım" modları model kullanır. Birebir klon ve renk paleti modları modelsiz çalışır.</p>
+    <div class="seg" id="provider">
+      <label><input type="radio" name="provider" value="claude"> Claude</label>
+      <label><input type="radio" name="provider" value="openai"> OpenAI</label>
+      <label><input type="radio" name="provider" value="gemini"> Gemini</label>
+      <label><input type="radio" name="provider" value="ollama"> Ollama (yerel)</label>
+      <label><input type="radio" name="provider" value="lmstudio"> LM Studio (yerel)</label>
+    </div>
+
+    <div class="pane" data-p="claude">
+      <label>API anahtarı <input id="claude-key" type="password" placeholder="sk-ant-…" autocomplete="off"></label>
+      <label>Model <input id="claude-model" list="claude-models"></label>
+      <datalist id="claude-models"><option value="claude-sonnet-5-5"><option value="claude-opus-5-5"><option value="claude-fable-5-1"><option value="claude-haiku-5-5"></datalist>
+      <label>Sunucu adresi (proxy için değiştirilebilir) <input id="claude-url"></label>
+    </div>
+
+    <div class="pane" data-p="openai">
+      <label>API anahtarı <input id="openai-key" type="password" placeholder="sk-…" autocomplete="off"></label>
+      <label>Model (görsel için vision destekli olmalı) <input id="openai-model" list="openai-models"></label>
+      <datalist id="openai-models"><option value="gpt-4.1"><option value="gpt-4o"><option value="gpt-4o-mini"></datalist>
+      <label>Sunucu adresi (OpenAI uyumlu başka bir servis de olabilir) <input id="openai-url"></label>
+    </div>
+
+    <div class="pane" data-p="gemini">
+      <label>API anahtarı <input id="gemini-key" type="password" placeholder="AIza…" autocomplete="off"></label>
+      <label>Model <input id="gemini-model" list="gemini-models"></label>
+      <datalist id="gemini-models"><option value="gemini-2.5-pro"><option value="gemini-2.5-flash"></datalist>
+      <label>Sunucu adresi <input id="gemini-url"></label>
+    </div>
+
+    <div class="pane" data-p="ollama">
+      <label>Sunucu adresi <input id="ollama-url"></label>
+      <label>Model <input id="ollama-model" list="ollama-models"></label>
+      <datalist id="ollama-models"></datalist>
+      <p class="hint">Görselden çalışmak için vision destekli model gerekir: <code>qwen2.5vl</code>, <code>llama3.2-vision</code>, <code>gemma3</code>, <code>minicpm-v</code>. Kurulum: <code>ollama pull qwen2.5vl:7b</code>. Eklenti <code>Origin</code> başlığını yerel adreslerde sildiği için <code>OLLAMA_ORIGINS</code> ayarı gerekmez.</p>
+    </div>
+
+    <div class="pane" data-p="lmstudio">
+      <label>Sunucu adresi <input id="lm-url"></label>
+      <label>Model (boş = yüklü model) <input id="lm-model" list="lm-models"></label>
+      <datalist id="lm-models"></datalist>
+      <p class="hint">LM Studio → Developer → <b>Start Server</b>. Görsel için vision modeli yükleyin.</p>
+    </div>
+
+    <p class="hint">API anahtarları yalnızca bu tarayıcı profilinde (<code>chrome.storage.local</code>) düz metin saklanır ve yalnızca ilgili sunucuya gönderilir.</p>
+    <div class="row">
+      <button id="test">Bağlantıyı test et / modelleri listele</button>
+      <span id="test-out" class="hint"></span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Referans bileşen kütüphanesi <small id="lib-count" class="hint"></small></h2>
+    <p class="hint">1001 örnek bileşen (HTML/CSS/JS + tasarım belirteçleri). AI modlarında, hedef tasarıma en yakın örnekler prompt'a <b>referans</b> olarak eklenir; böylece her sağlayıcı (Claude, OpenAI, Gemini, yerel modeller) aynı kalıpları ve erişilebilirlik desenlerini izler.</p>
+    <label class="chk"><input id="refs-on" type="checkbox"> AI modlarında referans kütüphanesini kullan</label>
+    <div class="grid2">
+      <label>Örnek sayısı <input id="refs-count" type="number" min="1" max="10"></label>
+      <label>Karakter bütçesi (küçük yerel modeller için düşürün) <input id="refs-chars" type="number" min="2000" max="60000" step="1000"></label>
+    </div>
+    <label class="chk"><input id="refs-user" type="checkbox"> Kendi kütüphanemi de dahil et</label>
+
+    <h3>Kendi bileşenlerin</h3>
+    <div class="row">
+      <label class="file">İçe aktar (.json / .jsonl) <input id="imp" type="file" accept=".json,.jsonl,application/json" hidden></label>
+      <button id="clear-user" type="button">Kullanıcı kütüphanesini temizle</button>
+      <span id="imp-out" class="hint"></span>
+    </div>
+
+    <h3>Eğitim / ince ayar verisi olarak dışa aktar</h3>
+    <div class="grid2">
+      <label>Biçim <select id="tr-format"></select></label>
+      <label>Giriş sayısı sınırı (0 = tümü) <input id="tr-limit" type="number" min="0" max="2000" step="50"></label>
+    </div>
+    <label class="chk"><input id="tr-user" type="checkbox"> Yalnızca kendi bileşenlerim</label>
+    <label id="tr-base-wrap">Ollama temel modeli (Modelfile için) <input id="tr-base" placeholder="qwen2.5-coder:7b"></label>
+    <div class="row"><button id="tr-go" type="button" class="primary">Dışa aktar</button><span id="tr-out" class="hint"></span></div>
+    <p class="hint"><b>Claude</b> için herkese açık ince ayar yoktur; kütüphane bağlam-içi referans olarak kullanılır. <b>OpenAI</b> (chat) ve <b>Gemini / Vertex</b> için JSONL doğrudan ince ayar işine yüklenebilir. <b>Alpaca / ShareGPT</b> yerel eğitim araçları içindir. <b>Ollama Modelfile</b> örnekleri modele gömer (<code>ollama create</code>).</p>
+  </section>
+
+  <section>
+    <h2>Üretim</h2>
+    <label>Maks. çıktı token <input id="max-tokens" type="number" min="2000" max="128000" step="1000"></label>
+    <label>Yerel model bağlam penceresi (num_ctx) <input id="num-ctx" type="number" min="4096" max="262144" step="1024"></label>
+    <label class="chk"><input id="inline" type="checkbox"> Görsel ve fontları HTML içine göm (tek dosya, çevrimdışı çalışır)</label>
+    <label>Varlık başına üst sınır (MB) <input id="max-mb" type="number" min="0.5" max="50" step="0.5"></label>
+    <label>Klonlamada script'ler
+      <select id="scripts"><option value="strip">Kaldır (statik, güvenli, önerilen)</option><option value="keep">Koru (orijinal JS çalışır; SPA'larda bozulabilir)</option></select>
+    </label>
+    <label class="chk"><input id="autoscroll" type="checkbox"> Yakalamadan önce sayfayı kaydır (lazy-load görselleri tetikler)</label>
+  </section>
+
+  <div class="row"><button id="save" class="primary">Kaydet</button><span id="saved" class="hint"></span></div>
+</main>
+<script type="module" src="options.js"></script>
+</body>
+</html>

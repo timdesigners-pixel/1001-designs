@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design Replicator — Stüdyo</title>
+<script src="../lib/theme-init.js"></script>
+<link rel="stylesheet" href="studio.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="mark"></span><b>Design Replicator</b></div>
+  <div class="source" id="source">Kaynak: —</div>
+  <button class="theme-btn" id="theme-btn" type="button">◐ Otomatik</button>
+  <a href="#" id="open-opts" class="ghost">Ayarlar</a>
+</header>
+
+<div class="layout">
+  <aside class="side">
+    <section>
+      <h3>1 · Ne üretelim?</h3>
+      <div class="modes" id="modes">
+        <label data-m="pin"><input type="radio" name="mode" value="pin"><span><b>Pinterest pin / görsel URL → HTML tasarım</b><small>Görseldeki tasarımı analiz edip HTML/CSS/JS dökümü verir (AI)</small></span></label>
+        <label data-m="tab"><input type="radio" name="mode" value="tab"><span><b>Sekme → birebir klon</b><small>DOM + CSS + görsel + font (modelsiz)</small></span></label>
+        <label data-m="tab-ai"><input type="radio" name="mode" value="tab-ai"><span><b>Sekme → AI ile yeniden yaz</b><small>Temiz kod + çalışan etkileşimler</small></span></label>
+        <label data-m="image"><input type="radio" name="mode" value="image"><span><b>Görsel → renk paleti + pin sayfası</b><small>Yapay zekâ gerektirmez (tasarımı çözümlemez)</small></span></label>
+      </div>
+    </section>
+
+    <section id="img-section" hidden>
+      <h3>Pin veya görsel</h3>
+      <div class="row">
+        <input id="img-url" placeholder="Pinterest pin URL'si veya görsel adresi">
+        <button class="btn" id="img-url-go">Getir</button>
+      </div>
+      <p class="hint" id="pin-hint" hidden>Pinterest sekmesindeyseniz URL girmeden de çalışır.</p>
+      <div class="drop" id="drop" tabindex="0">
+        <img id="drop-preview" alt="" hidden>
+        <span id="drop-text">…ya da görseli buraya sürükle, yapıştır (Ctrl+V) veya tıkla</span>
+      </div>
+      <input type="file" id="file" accept="image/*" hidden>
+      <button class="btn wide" id="use-shot" hidden>Sekmenin ekran görüntüsünü kullan</button>
+      <label class="stack" id="note-wrap" hidden>Ek talimat (isteğe bağlı)
+        <textarea id="note" rows="2" placeholder="Ör: koyu tema olsun, menü sticky kalsın"></textarea>
+      </label>
+    </section>
+
+    <section>
+      <h3>2 · Seçenekler</h3>
+      <label class="chk"><input type="checkbox" id="o-inline"> Görsel/fontları dosyaya göm</label>
+      <label class="chk" id="o-scripts-wrap"><input type="checkbox" id="o-keep"> Orijinal script'leri koru</label>
+      <label class="chk" id="o-overlay-wrap"><input type="checkbox" id="o-overlay"> Çerez/overlay panellerini temizle</label>
+      <label class="chk" id="o-refs-wrap"><input type="checkbox" id="o-refs"> Referans kütüphanesini kullan (1001 bileşen)</label>
+      <label class="stack" id="o-model-wrap">Model sağlayıcı
+        <select id="o-provider"><option value="claude">Claude API</option><option value="openai">OpenAI</option><option value="gemini">Google Gemini</option><option value="ollama">Ollama (yerel)</option><option value="lmstudio">LM Studio (yerel)</option></select>
+      </label>
+      <label class="stack" id="o-model-name-wrap">Model adı <input id="o-model" list="model-list"></label>
+      <datalist id="model-list"></datalist>
+    </section>
+
+    <div class="row">
+      <button class="btn primary grow" id="run">Oluştur</button>
+      <button class="btn" id="stop" hidden>Durdur</button>
+    </div>
+
+    <section>
+      <h3>Günlük</h3>
+      <ol class="log" id="log"></ol>
+    </section>
+  </aside>
+
+  <main class="stage">
+    <div class="bar">
+      <div class="tabs" id="tabs">
+        <button data-v="preview" class="on">Önizleme</button>
+        <button data-v="code">Kod</button>
+        <button data-v="split">Yan yana</button>
+        <button data-v="library">Kütüphane</button>
+        <button data-v="assets">Varlıklar</button>
+      </div>
+      <div class="devices" id="devices">
+        <button data-w="375" title="Telefon">375</button>
+        <button data-w="768" title="Tablet">768</button>
+        <button data-w="0" class="on" title="Tam genişlik">Tam</button>
+      </div>
+      <div class="spacer"></div>
+      <button class="btn" id="save-ref" disabled title="Geçerli sonucu kendi referans kütüphanene ekle">Referansa ekle</button>
+      <button class="btn" id="copy" disabled>Kopyala</button>
+      <button class="btn" id="dl-html" disabled>.html indir</button>
+      <button class="btn primary" id="dl-zip" disabled>.zip indir</button>
+    </div>
+    <div class="work" id="work">
+      <section class="pane" id="v-preview">
+        <div class="empty" id="empty">Soldan bir mod seçip <b>Oluştur</b>'a basın.</div>
+        <div class="frame-wrap" id="frame-wrap" hidden><iframe id="frame" src="../sandbox/preview.html" title="Önizleme"></iframe></div>
+        <p class="note" id="preview-note" hidden></p>
+      </section>
+      <section class="pane code-pane" id="v-code" hidden>
+        <div class="ed-bar">
+          <div class="files" id="files">
+            <button data-f="html" class="on">HTML<i class="badge" hidden></i></button>
+            <button data-f="css">CSS<i class="badge" hidden></i></button>
+            <button data-f="js">JS<i class="badge" hidden></i></button>
+          </div>
+          <div class="spacer"></div>
+          <label class="chk sm"><input type="checkbox" id="ed-auto" checked> Canlı önizleme</label>
+          <button class="btn sm" id="ed-apply" title="Ctrl+Enter">Uygula</button>
+          <button class="btn sm" id="ed-format" title="Shift+Alt+F">Biçimlendir</button>
+          <button class="btn sm" id="ed-wrap" title="Alt+Z">Kaydır</button>
+          <button class="btn sm" id="ed-minus" title="Yazıyı küçült">A−</button>
+          <button class="btn sm" id="ed-plus" title="Yazıyı büyüt">A+</button>
+        </div>
+        <div id="editor"><div class="empty" id="ed-loading">Editör yükleniyor…</div></div>
+        <div class="ed-status">
+          <span id="st-pos">Satır 1, Sütun 1</span><span id="st-lang">html</span><span id="st-err">0 hata</span>
+          <span class="grow"></span><span>Ctrl+Space öneri · Ctrl+F ara · Ctrl+Enter uygula · F1 komutlar</span>
+        </div>
+      </section>
+      <section class="pane lib" id="v-library" hidden>
+        <div class="lib-bar">
+          <input id="lib-q" placeholder="Bileşen ara: navbar, pricing, dark, pill…">
+          <select id="lib-cat"><option value="">Tüm kategoriler</option></select>
+          <label class="chk sm"><input type="checkbox" id="lib-pinned"> Yalnızca sabitlenenler</label>
+          <span id="lib-count" class="hint"></span>
+        </div>
+        <div class="lib-grid" id="lib-grid"></div>
+        <div class="lib-more"><button class="btn" id="lib-more" type="button">Daha fazla göster</button></div>
+      </section>
+      <section class="pane assets" id="v-assets" hidden></section>
+    </div>
+  </main>
+</div>
+<script type="module" src="studio.js"></script>
+</body>
+</html>
