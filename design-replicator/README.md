@@ -1,4 +1,10 @@
-# Design Replicator (Chrome eklentisi, MV3) — v1.1.0
+# Design Replicator (Chrome eklentisi, MV3) — v1.2.0
+
+**Binbir Dizayn Pro:** Kütüphanedeki **Uyarla · PRO** düğmesi seçili bileşeni mevcut belgenin istediğiniz alanına uyarlamak için hedef alan, yerleştirme ve içerik seçimi sunar. Önizleme sonrasında sonucu uygulayabilir ve geri alabilirsiniz. Kaynak web sitesi değişmez; çıktı stüdyoda düzenlenir ve indirilir.
+
+Ücretsiz araçlar: statik klon, palet, kütüphane, HTML indirme. Pro: Uyarla, AI üretim ve ZIP indirme. Pro hesabı ve satın alma kütüphanedeki Pro alanındadır. Hesap açmak Pro yetkisi vermez; ödeme sağlayıcısından aktif abonelik doğrulanır.
+
+Ticari yayın henüz yapılmadı. Geliştirme paketi ve üyelik hizmeti için [COMMERCIAL-SETUP.md](COMMERCIAL-SETUP.md); mağaza durumu için [CHROMEWEBSTORE.md](CHROMEWEBSTORE.md). ChatGPT/Claude aylık üyelikleri API kredisi yerine kullanılamaz; üçüncü taraf bağlantısı API hesabıyla çalışır.
 
 Pinterest pini, görsel ya da açık sekmedeki sayfayı **çalışan HTML/CSS/JS** tasarıma dönüştürür.
 Çıktı: tek dosya `.html` (görsel/font gömülü) veya `index.html + style.css + script.js + assets/` ZIP.

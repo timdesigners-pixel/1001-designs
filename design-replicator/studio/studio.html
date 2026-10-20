@@ -22,7 +22,7 @@
       <div class="modes" id="modes">
         <label data-m="pin"><input type="radio" name="mode" value="pin"><span><b>Pinterest pin / görsel URL → HTML tasarım</b><small>Görseldeki tasarımı analiz edip HTML/CSS/JS dökümü verir (AI)</small></span></label>
         <label data-m="tab"><input type="radio" name="mode" value="tab"><span><b>Sekme → birebir klon</b><small>DOM + CSS + görsel + font (modelsiz)</small></span></label>
-        <label data-m="tab-ai"><input type="radio" name="mode" value="tab-ai"><span><b>Sekme → AI ile yeniden yaz</b><small>Temiz kod + çalışan etkileşimler</small></span></label>
+        <label data-m="tab-ai"><input type="radio" name="mode" value="tab-ai"><span><b>Sekme → AI ile yeniden yaz <span class="pro-badge">PRO</span></b><small>Temiz kod + çalışan etkileşimler</small></span></label>
         <label data-m="image"><input type="radio" name="mode" value="image"><span><b>Görsel → renk paleti + pin sayfası</b><small>Yapay zekâ gerektirmez (tasarımı çözümlemez)</small></span></label>
       </div>
     </section>
@@ -75,7 +75,7 @@
         <button data-v="preview" class="on">Önizleme</button>
         <button data-v="code">Kod</button>
         <button data-v="split">Yan yana</button>
-        <button data-v="library">Kütüphane</button>
+        <button data-v="library">Binbir Dizayn</button>
         <button data-v="assets">Varlıklar</button>
       </div>
       <div class="devices" id="devices">
@@ -87,7 +87,7 @@
       <button class="btn" id="save-ref" disabled title="Geçerli sonucu kendi referans kütüphanene ekle">Referansa ekle</button>
       <button class="btn" id="copy" disabled>Kopyala</button>
       <button class="btn" id="dl-html" disabled>.html indir</button>
-      <button class="btn primary" id="dl-zip" disabled>.zip indir</button>
+      <button class="btn primary" id="dl-zip" disabled>.zip indir · Pro</button>
     </div>
     <div class="work" id="work">
       <section class="pane" id="v-preview">
@@ -117,6 +117,7 @@
         </div>
       </section>
       <section class="pane lib" id="v-library" hidden>
+        <div class="lib-pro-intro"><div><span class="pro-badge">PRO</span><b> Binbir Dizayn · Uyarla</b><p>Bir bileşen seç. Sitenin yapısına, içeriğine ve istediğin alana uyarla.</p></div><button class="btn primary" id="open-pro" type="button">Pro · Satın alma / Hesabım</button></div>
         <div class="lib-bar">
           <input id="lib-q" placeholder="Bileşen ara: navbar, pricing, dark, pill…">
           <select id="lib-cat"><option value="">Tüm kategoriler</option></select>

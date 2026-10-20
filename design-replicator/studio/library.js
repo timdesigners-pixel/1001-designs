@@ -7,7 +7,7 @@ const $ = (s) => document.querySelector(s);
 const NAT_W = 760;
 const NAT_H = 440;
 
-export async function initLibrary({ onOpen, getPinned, togglePin, onCopy }) {
+export async function initLibrary({ onOpen, onAdapt, getPinned, togglePin, onCopy }) {
   const q = $('#lib-q'), cat = $('#lib-cat'), grid = $('#lib-grid'), more = $('#lib-more'), cnt = $('#lib-count'), onlyPin = $('#lib-pinned');
   let lib = await loadLibrary();
 
@@ -42,11 +42,12 @@ export async function initLibrary({ onOpen, getPinned, togglePin, onCopy }) {
     el.className = 'lib-card';
     el.innerHTML = `<div class="th-wrap"><iframe title="${e.name.replace(/"/g, '&quot;')}" tabindex="-1" style="width:${NAT_W}px;height:${NAT_H}px"></iframe></div>
       <div class="lib-meta"><b></b><small></small></div>
-      <div class="lib-acts"><button class="btn sm go" type="button">Editörde aç</button><button class="btn sm pin" type="button" aria-pressed="${pinned}" title="Her AI isteğinde referans olarak kullan">${pinned ? '★ Sabit' : '☆ Sabitle'}</button><button class="btn sm cp" type="button">Kopyala</button></div>`;
+      <div class="lib-acts"><button class="btn sm adapt" type="button">Uyarla <span class="pro-badge">PRO</span></button><button class="btn sm go" type="button">Editörde aç</button><button class="btn sm pin" type="button" aria-pressed="${pinned}" title="Her AI isteğinde referans olarak kullan">${pinned ? '★ Sabit' : '☆ Sabitle'}</button><button class="btn sm cp" type="button">Kopyala</button></div>`;
     el.querySelector('b').textContent = e.name;
     el.querySelector('small').textContent = (e.user ? 'Kullanıcı · ' : '') + (e.interactive ? 'etkileşimli · ' : '') + e.category;
     const wrap = el.querySelector('.th-wrap');
     frames.set(wrap.querySelector('iframe').contentWindow, e);
+    el.querySelector('.adapt').addEventListener('click', () => onAdapt(e));
     el.querySelector('.go').addEventListener('click', () => onOpen(e));
     el.querySelector('.cp').addEventListener('click', () => onCopy(e));
     el.querySelector('.pin').addEventListener('click', (ev) => {

@@ -1,0 +1,10 @@
+release/
+server/.env
+.env
+.env.*
+!.env.example
+data/
+*.sqlite*
+node_modules/
+__pycache__/
+.serena/

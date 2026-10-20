@@ -1,5 +1,13 @@
 # Değişiklik günlüğü
 
+## 1.2.0 — 2026-10-20
+- Binbir Dizayn kütüphanesine Pro rozetli Uyarla ve satın alma alanı.
+- Hedef alan, yerleştirme, içerik yönü, veri gönderimi onayı, izole önizleme, uygulama ve geri alma.
+- Hesap oluşturma/giriş/çıkış, Stripe Checkout ve abonelik yönetimi için yapılandırılabilir hizmet.
+- Sunucuda ücretli abonelik doğrulaması, kota, imzalı webhook ve iptal desteği.
+- AI üretim ve ZIP indirme için Pro kontrolü; hizmet testleri ve ticari kurulum taslakları.
+- Gerçek ödeme/AI ve mağaza yayını işletmeci yapılandırması bekler.
+
 ## 1.1.0 — 2026-10-20
 ### Eklenenler
 - **Emmet** (HTML ve CSS): öneri listesinde, `Tab` ve `Ctrl+E` ile kısaltma genişletme; etiket/öznitelik, `<script>` ve CSS dışı bağlamlarda tetiklenmez.

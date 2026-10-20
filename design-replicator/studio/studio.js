@@ -7,6 +7,8 @@ import { createEditor } from '../lib/editor.js';
 import { initTheme, resolvedTheme } from '../lib/theme.js';
 import { loadLibrary, selectRefs, formatRefs, entryDocument, addUserRef } from '../lib/refs.js';
 import { initLibrary } from './library.js';
+import { requirePro, openPro } from '../lib/pro.js';
+import { initAdapt } from './adapt.js';
 
 const S = { parts: { html: '', css: '', js: '' }, assetData: new Map(), editor: null, editorP: null, settingParts: false, previewReady: false, job: null, settings: null, mode: null, image: null, result: null, abort: null, busy: false, view: 'preview' };
 const PIN_PAGE = /^https?:\/\/([a-z0-9-]+\.)?pinterest\.[a-z.]+\/pin\//i;
@@ -282,6 +284,7 @@ async function inlineExternal(html, A, maxBytes) {
 }
 
 async function runAI(kind) {
+  await requirePro();
   const cfg = aiConfig();
   const o = opts();
   const content = [];
@@ -516,6 +519,7 @@ function downloadHtml() {
   downloadBlob(new Blob([composeSingle(syncParts())], { type: 'text/html' }), `${S.result.name}.html`);
 }
 async function downloadZip() {
+  try { await requirePro(); } catch(e) { log(e.message, 'warn'); openPro(); return; }
   const r = S.result;
   const enc = new TextEncoder();
   const p = syncParts();
@@ -528,8 +532,10 @@ async function downloadZip() {
 
 /* ---- referans kütüphanesi ---- */
 let libP;
+let adaptEntry;
 function openLibrary() {
   libP ||= initLibrary({
+    onAdapt: (entry) => adaptEntry(entry),
     onOpen: async (e) => {
       const html = entryDocument(e, { page: true });
       await setResult({ html, assets: new Assets(0), name: slugify(e.id + '-' + e.category), keepScripts: false, ai: false });
@@ -660,6 +666,12 @@ function syncProviderUI() {
 async function init() {
   await initTheme($('#theme-btn'), (t) => { if (S.editor) S.editor.setDark(t === 'dark'); });
   S.settings = await loadSettings();
+  $('#open-pro').addEventListener('click', openPro);
+  adaptEntry = initAdapt({
+    getDocument: () => S.result ? composeSingle(syncParts()) : '',
+    applyDocument: html => setResult({ html, assets: new Assets(0), name: S.result?.name || 'uyarlama', keepScripts: false, ai: false }),
+    log, isBusy: () => S.busy
+  });
   const id = new URLSearchParams(location.search).get('job');
   if (id) {
     const got = await chrome.storage.session.get('job:' + id).catch(() => ({}));

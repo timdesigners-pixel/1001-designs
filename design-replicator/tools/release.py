@@ -14,9 +14,9 @@ import hashlib, json, os, re, subprocess, sys, zipfile
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 OUT = os.path.join(ROOT, 'release')
 
-RUNTIME_DIRS = ['popup', 'options', 'studio', 'sandbox', 'content', 'lib', 'templates', 'vendor', 'icons', 'dataset']
-RUNTIME_FILES = ['manifest.json', 'background.js', 'README.md', 'LICENSE', 'CHANGELOG.md']
-EXTRA = {'tools/install-helper.cmd': 'install-helper.cmd'}   # paket kokune konur
+RUNTIME_DIRS = ['popup', 'options', 'studio', 'sandbox', 'content', 'lib', 'templates', 'vendor', 'icons', 'dataset', 'pro']
+RUNTIME_FILES = ['manifest.json', 'background.js', 'LICENSE']
+EXTRA = {}
 SKIP = re.compile(r'(^|/)(\.git|node_modules|__pycache__|release)(/|$)|\.map$')
 
 
@@ -105,7 +105,7 @@ def build(name, files):
     return path
 
 zip_rt = build('design-replicator-%s.zip' % version, runtime)
-source = list(runtime) + [(p, p) for p in sorted(walk('tools')) if p not in EXTRA]
+source = list(runtime) + [(p, p) for d in ['tools', 'server'] for p in sorted(walk(d)) if p not in EXTRA and not (os.path.basename(p).startswith('.env') and os.path.basename(p) != '.env.example') and '.sqlite' not in p] + [(p, p) for p in ['README.md', 'CHANGELOG.md', 'COMMERCIAL-SETUP.md', 'CHROMEWEBSTORE.md', 'STORE-LISTING.md', 'TESTING.md']]
 zip_src = build('design-replicator-%s-source.zip' % version, source)
 
 # 5) ozetler + notlar
@@ -118,6 +118,6 @@ open(os.path.join(OUT, 'SHA256SUMS.txt'), 'w').write('\n'.join(lines) + '\n')
 
 changelog = open(os.path.join(ROOT, 'CHANGELOG.md'), encoding='utf-8').read()
 m = re.search(r'## %s.*?(?=\n## |\Z)' % re.escape(version), changelog, re.S)
-notes = '# Design Replicator %s\n\n%s\n\n## Kurulum\n1. `design-replicator-%s.zip` dosyasini kalici bir klasore cikarin\n2. `chrome://extensions` -> Gelistirici modu -> Paketlenmemis oge yukle -> klasoru secin\n3. (Windows) `install-helper.cmd` bu adimlari otomatik acar\n\nDogrulama: `SHA256SUMS.txt`\n' % (version, (m.group(0) if m else ''), version)
+notes = '# Design Replicator %s\n\n%s\n\n## Kurulum\n1. `design-replicator-%s.zip` dosyasini kalici bir klasore cikarin\n2. `chrome://extensions` -> Gelistirici modu -> Paketlenmemis oge yukle -> klasoru secin\n3. Pro hizmetini kaynak paketteki COMMERCIAL-SETUP.md ile yapilandirin. Magaza yayini ve canli odeme henuz yapilmadi.\n\nDogrulama: `SHA256SUMS.txt`\n' % (version, (m.group(0) if m else ''), version)
 open(os.path.join(OUT, 'RELEASE-NOTES-%s.md' % version), 'w', encoding='utf-8').write(notes)
 print('release/ hazir:', ', '.join(sorted(os.listdir(OUT))))
