@@ -1,5 +1,13 @@
 # Değişiklik günlüğü
 
+## 1.3.0 — 2026-10-20
+- Gelişmiş editör araç çubuğu: IntelliSense, parametre yardımı, Bul/Değiştir, komutlar, hızlı düzeltme, geri al/yinele.
+- HTML'deki öğe türlerini JavaScript IntelliSense'e aktaran yerel tür tanımları.
+- CSS class/id ve değişken önerileri; `var()` içinde yinelenen ifade oluşturmayan tamamlama.
+- Tıklanabilir hata/uyarı paneli, isteğe bağlı JavaScript tür denetimi ve kalıcı mini harita tercihi.
+- Dosya başına imleç/kaydırma konumu, bağımsız model adresleri ve editör kapanışında kaynak temizliği.
+- Gerçek MV3 ortamında çalışan editör ve dil worker testleri.
+
 ## 1.2.0 — 2026-10-20
 - Binbir Dizayn kütüphanesine Pro rozetli Uyarla ve satın alma alanı.
 - Hedef alan, yerleştirme, içerik yönü, veri gönderimi onayı, izole önizleme, uygulama ve geri alma.

@@ -1,4 +1,4 @@
-# Design Replicator (Chrome eklentisi, MV3) — v1.2.0
+# Design Replicator (Chrome eklentisi, MV3) — v1.3.0
 
 **Binbir Dizayn Pro:** Kütüphanedeki **Uyarla · PRO** düğmesi seçili bileşeni mevcut belgenin istediğiniz alanına uyarlamak için hedef alan, yerleştirme ve içerik seçimi sunar. Önizleme sonrasında sonucu uygulayabilir ve geri alabilirsiniz. Kaynak web sitesi değişmez; çıktı stüdyoda düzenlenir ve indirilir.
 
@@ -42,7 +42,14 @@ Windows'ta `install-helper.cmd` çift tıklanırsa `chrome://extensions` ve klas
 
 "Bağlantıyı test et" her sağlayıcının model listesini getirir. Yerel modeller büyük çıktıda Claude/OpenAI/Gemini'nin gerisinde kalabilir; `num_ctx`, maks. token ve referans bütçesini ayarlayın.
 
-## Kod editörü (Monaco, VS Code motoru) + Emmet
+## Gelişmiş kod editörü (Monaco) + IntelliSense + Emmet
+- CSS: HTML belgesindeki class/id önerileri, CSS özellik ve değerleri, renk seçici, değişken değerleri ve doğru `var(--token)` tamamlaması.
+- JavaScript: HTML öğelerine göre tür önerileri (`input.value`, `button.disabled`), imza/parametre yardımı ve açılıp kapatılabilir tür denetimi.
+- Tıklanabilir **Sorunlar** paneli: HTML/CSS/JS hata ve uyarılarını listeler, seçilen satıra götürür (`Ctrl+Shift+M`).
+- Araç çubuğu: IntelliSense, parametreler, Bul/Değiştir, komut paleti, hızlı düzeltme, Geri al/Yinele; mini harita ve tür denetimi tercihleri kaydedilir.
+- Dosya geçişlerinde imleç, kaydırma konumu ve geri alma geçmişi korunur.
+
+### Önceki düzenleme araçları
 - IntelliSense: HTML etiket/öznitelik, CSS özellik/değer (MDN açıklamalı), JS için tür tabanlı DOM/ES2020, hover, imza ipuçları, renk seçici
 - **Emmet** (HTML + CSS): `ul>li.item$*3` yaz → `Tab` ya da `Ctrl+E`; öneri listesinde "Emmet" öğesi görünür. CSS'te `m10-20`, `bgc#f00`, `dn`…
 - Projeye özel öneri: CSS'teki `--değişkenler` → `var(--x)`; `querySelector('` içinde `.class`/`#id`; snippet'ler (`flexc`, `mq`, `qsa`, `on`, `fetchj`…)

@@ -24,6 +24,8 @@ Primary Language: Türkçe
 | Screenshot 1 | 1280×800 | Gerçek eklentiden test görüntüsü hazır | store-assets/pro-library.png |
 | Screenshot 2 | 1280×800 | Gerçek eklentiden test görüntüsü hazır | store-assets/pro-adapt.png |
 
+Editör ekranı: store-assets/advanced-editor.png (1280×800, gerçek eklenti ortamından geliştirme doğrulama görüntüsü).
+
 Test ekranları kontrollü geliştirme verileriyle hazırlanır; canlı üyelik veya gerçek AI çıktısı gibi sunulmamalıdır.
 
 ## Permissions Justification
@@ -84,6 +86,7 @@ Homepage: https://github.com/timdesigners-pixel/1001-designs
 
 | Version | Date | Changes | Status |
 |---|---|---|---|
+| 1.3.0 | 2026-10-20 | CSS/JS IntelliSense, DOM türleri, hata paneli ve gelişmiş araçlar | Draft |
 | 1.2.0 | 2026-10-20 | Pro Uyarla, hesap/ödeme hizmeti, ücretli özellik kapıları | Draft |
 | 1.1.0 | 2026-10-20 | Yerel başlangıç sürümü GitHub'a kaydedildi | Source only |
 

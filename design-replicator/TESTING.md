@@ -1,4 +1,8 @@
-# 1.2.0 doğrulaması — 20 Ekim 2026
+# 1.3.0 doğrulaması — 20 Ekim 2026
+
+Editör testi: `node tools/test-editor.cjs`. Gerçek Chromium MV3 ortamında yerel Monaco dil worker'ları, HTMLInputElement tür çıkarımı, JavaScript semantik hataları, tür denetiminin açılıp kapanması, CSS değişken ve class tamamlaması, hata satırına gitme, bulma ve mini harita kontrolü doğrulandı.
+
+## Önceki Pro akışı
 
 - Sunucu testleri: 3 test grubu geçti. Oturum, kayıt/giriş/çıkış, abonelik, ödeme URL'sinin erişim açmaması, iptal, kota, başarısız AI çağrısında kota iadesi ve webhook imza/zaman kontrolleri.
 - HTTP arayüz testi: ücretsiz kilit, 1001 bileşen/24 kart sayfalama, mobil taşma kontrolü, veri gönderimi onayı, önizleme, uygulama, geri alma geçti.

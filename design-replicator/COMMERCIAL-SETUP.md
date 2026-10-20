@@ -1,4 +1,4 @@
-# Design Replicator Pro 1.2.0 — işletmeci kurulumu
+# Design Replicator Pro 1.3.0 — işletmeci kurulumu
 
 Bu sürüm çalışan bir geliştirme paketidir. Canlı ödeme, gerçek AI modeli ve Chrome Web Store yayını henüz yapılmadı.
 
@@ -49,7 +49,7 @@ Gerçek modellerle doğrulama yapılmadan ticari kalite garantisi verilmemelidir
 - Gerçek ödeme/yenileme/iptal, gerçek AI ile uzun belge ve DOM yerleşimi testleri.
 - Chrome geliştirici hesabı, mağaza açıklaması, ekran görüntüleri, gizlilik bağlantısı ve veri kullanım beyanları. STORE-LISTING.md taslağı sağlanır.
 - <all_urls> mevcut klonlama ve harici varlık indirme için kullanılır; incelemede amacı açıkça beyan edin. İzinleri azaltmak için ayrı bir optional permissions geçişi değerlendirilmelidir.
-- Mağazaya yalnızca release/design-replicator-1.2.0.zip yüklenir. Sunucu kaynak ZIP'i yüklenmez.
+- Mağazaya yalnızca release/design-replicator-1.3.0.zip yüklenir. Sunucu kaynak ZIP'i yüklenmez.
 - Mağaza kaydı ve ödeme işlemi gerçek kullanıcı onayı/işletme bilgileriyle tamamlanmalıdır; bu geliştirme sırasında yayın yapılmamıştır.
 
 ## Sağlayıcı hesapları

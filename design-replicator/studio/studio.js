@@ -9,6 +9,8 @@ import { loadLibrary, selectRefs, formatRefs, entryDocument, addUserRef } from '
 import { initLibrary } from './library.js';
 import { requirePro, openPro } from '../lib/pro.js';
 import { initAdapt } from './adapt.js';
+import { attachEditorTools } from './editor-tools.js';
+let editorTools;
 
 const S = { parts: { html: '', css: '', js: '' }, assetData: new Map(), editor: null, editorP: null, settingParts: false, previewReady: false, job: null, settings: null, mode: null, image: null, result: null, abort: null, busy: false, view: 'preview' };
 const PIN_PAGE = /^https?:\/\/([a-z0-9-]+\.)?pinterest\.[a-z.]+\/pin\//i;
@@ -428,8 +430,9 @@ window.addEventListener('message', (e) => {
 /* ---- editör ---- */
 function ensureEditor() {
   if (S.editor) return Promise.resolve(S.editor);
-  S.editorP ||= createEditor($('#editor'), { onChange, onApply, onMarkers, onCursor }, { dark: resolvedTheme() === 'dark' }).then((ed) => {
+  S.editorP ||= createEditor($('#editor'), { onChange, onApply, onMarkers, onCursor, onProblems: problems => editorTools?.setProblems(problems), onFile: setFileTab }, { dark: resolvedTheme() === 'dark' }).then(async (ed) => {
     S.editor = ed;
+    editorTools = await attachEditorTools(ed, { log });
     const l = $('#ed-loading'); if (l) l.remove();
     return ed;
   });

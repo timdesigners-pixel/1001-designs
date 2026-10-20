@@ -1,5 +1,7 @@
 // Monaco tabanlı kod editörü (HTML / CSS / JS). Yerel paketlenmiş AMD derlemesini kullanır:
 // MV3 CSP uzaktan script ve blob: worker'a izin vermediği için worker, dosya tabanlı önyükleyiciyle açılır.
+import { cssVariableSuggestions, setupWorkspaceIntelligence } from './editor-intelligence.js';
+
 const BASE = new URL('../vendor/monaco/', import.meta.url).href;
 
 let monacoP;
@@ -54,7 +56,7 @@ function setupLanguages(monaco) {
   registered = true;
   const ts = monaco.languages.typescript;
   ts.javascriptDefaults.setCompilerOptions({
-    target: ts.ScriptTarget.ES2020, allowNonTsExtensions: true, allowJs: true, checkJs: false, noEmit: true,
+    target: ts.ScriptTarget.ES2020, allowNonTsExtensions: true, allowJs: true, checkJs: true, noEmit: true,
     lib: ['es2020', 'dom', 'dom.iterable'],
   });
   ts.javascriptDefaults.setDiagnosticsOptions({ noSemanticValidation: false, noSyntaxValidation: false });
@@ -77,19 +79,7 @@ function setupLanguages(monaco) {
   // Aynı belgede tanımlı --özel-özellikleri var(--x) olarak öner (tasarım token'ları için)
   monaco.languages.registerCompletionItemProvider('css', {
     triggerCharacters: ['-', '('],
-    provideCompletionItems(model, pos) {
-      const text = model.getValue();
-      const seen = new Map();
-      for (const m of text.matchAll(/(--[\w-]+)\s*:\s*([^;}{]+)/g)) if (!seen.has(m[1])) seen.set(m[1], m[2].trim());
-      const w = model.getWordUntilPosition(pos);
-      const range = { startLineNumber: pos.lineNumber, endLineNumber: pos.lineNumber, startColumn: w.startColumn, endColumn: w.endColumn };
-      return {
-        suggestions: [...seen].map(([name, val]) => ({
-          label: { label: name, description: val }, kind: kind.Variable, detail: val,
-          insertText: `var(${name})`, filterText: `${name} var`, range, sortText: '0' + name,
-        })),
-      };
-    },
+    provideCompletionItems(model, pos) { return cssVariableSuggestions(monaco, model, pos); },
   });
 
   // Sayfadaki id/class adlarını JS içinde selector tamamlaması için öner
@@ -245,7 +235,8 @@ export async function createEditor(container, handlers = {}, opts = {}) {
   monaco.editor.defineTheme('dr-dark', { base: 'vs-dark', inherit: true, rules: [], colors: { 'editor.background': '#121212' } });
   monaco.editor.defineTheme('dr-light', { base: 'vs', inherit: true, rules: [], colors: { 'editor.background': '#fafafa' } });
   const models = {};
-  for (const k of Object.keys(LANG)) models[k] = monaco.editor.createModel('', LANG[k], monaco.Uri.parse('file:///' + FILE[k]));
+  const workspace = 'file:///workspace-' + crypto.randomUUID() + '/';
+  for (const k of Object.keys(LANG)) models[k] = monaco.editor.createModel('', LANG[k], monaco.Uri.parse(workspace + FILE[k]));
 
   const ed = monaco.editor.create(container, {
     model: models.html,
@@ -273,12 +264,22 @@ export async function createEditor(container, handlers = {}, opts = {}) {
     folding: true,
     foldingStrategy: 'indentation',
     padding: { top: 8 },
+    accessibilitySupport: 'auto',
+    ariaLabel: 'HTML, CSS ve JavaScript kod editörü',
+    autoClosingBrackets: 'always',
+    autoClosingQuotes: 'always',
+    lightbulb: { enabled: 'on' },
+    codeLens: true,
+    suggestOnTriggerCharacters: true,
+    tabCompletion: 'on',
     mouseWheelZoom: true,
   });
 
   if (globalThis.emmet) bindEmmet(monaco, ed);
 
   let current = 'html';
+  const viewStates = {};
+  const syncIntelligence = setupWorkspaceIntelligence(monaco, models, ed);
   const fileOf = (model) => Object.keys(models).find((k) => models[k] === model);
 
   // Çapraz dosya bilgisi: JS tamamlayıcı için HTML/CSS metnini model üzerinde sakla
@@ -294,7 +295,12 @@ export async function createEditor(container, handlers = {}, opts = {}) {
     }
     return c;
   };
-  monaco.editor.onDidChangeMarkers(() => handlers.onMarkers && handlers.onMarkers(counts(), current));
+  const reportMarkers = () => {
+    handlers.onMarkers?.(counts(), current);
+    handlers.onProblems?.(api.problems());
+  };
+  const markerListener = monaco.editor.onDidChangeMarkers(reportMarkers);
+  ed.onDidDispose(() => { markerListener.dispose(); for (const model of Object.values(models)) model.dispose(); });
   ed.onDidChangeCursorPosition((e) => handlers.onCursor && handlers.onCursor(e.position));
 
   const apply = () => handlers.onApply && handlers.onApply();
@@ -308,15 +314,44 @@ export async function createEditor(container, handlers = {}, opts = {}) {
     setParts(parts) {
       for (const k of Object.keys(models)) { models[k].setValue(parts[k] ?? ''); }
       syncCross();
+      syncIntelligence();
+      for (const key of Object.keys(viewStates)) delete viewStates[key];
     },
     getPart: (k) => models[k].getValue(),
     getParts: () => ({ html: models.html.getValue(), css: models.css.getValue(), js: models.js.getValue() }),
-    show(k) { current = k; ed.setModel(models[k]); ed.setScrollTop(0); ed.focus(); handlers.onMarkers && handlers.onMarkers(counts(), current); },
+    show(k) {
+      if (!models[k]) return;
+      viewStates[current] = ed.saveViewState();
+      current = k; ed.setModel(models[k]);
+      if (viewStates[k]) ed.restoreViewState(viewStates[k]); else ed.setScrollTop(0);
+      ed.focus(); reportMarkers(); handlers.onFile?.(k);
+    },
     setDark: (b) => monaco.editor.setTheme(b ? 'dr-dark' : 'dr-light'),
     setReadOnly: (b) => ed.updateOptions({ readOnly: b }),
     async format() { const a = ed.getAction('editor.action.formatDocument'); if (a) await a.run(); },
     toggleWrap() { const on = ed.getOption(monaco.editor.EditorOption.wordWrap) === 'off'; ed.updateOptions({ wordWrap: on ? 'on' : 'off' }); return on; },
     zoom(d) { const sz = Math.min(24, Math.max(10, ed.getOption(monaco.editor.EditorOption.fontSize) + d)); ed.updateOptions({ fontSize: sz }); return sz; },
+    problems() {
+      return Object.entries(models).flatMap(([file, model]) => monaco.editor.getModelMarkers({ resource: model.uri })
+        .filter(marker => marker.severity >= monaco.MarkerSeverity.Warning)
+        .map(marker => ({ file, ...marker })))
+        .sort((a, b) => b.severity - a.severity || a.file.localeCompare(b.file) || a.startLineNumber - b.startLineNumber);
+    },
+    revealProblem(problem) {
+      api.show(problem.file);
+      ed.setSelection(new monaco.Range(problem.startLineNumber, problem.startColumn, problem.endLineNumber, problem.endColumn));
+      ed.revealLineInCenter(problem.startLineNumber); ed.focus();
+    },
+    async runAction(id) {
+      ed.focus();
+      if (id === 'undo' || id === 'redo') { ed.trigger('toolbar', id, null); return; }
+      await ed.getAction(id)?.run();
+    },
+    setTypeChecking(enabled) {
+      const defaults = monaco.languages.typescript.javascriptDefaults;
+      defaults.setCompilerOptions({ ...defaults.getCompilerOptions(), checkJs: !!enabled });
+    },
+    setMinimap: enabled => ed.updateOptions({ minimap: { enabled: !!enabled } }),
     counts,
     focus: () => ed.focus(),
     layout: () => ed.layout(),

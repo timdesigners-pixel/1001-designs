@@ -110,7 +110,24 @@
           <button class="btn sm" id="ed-minus" title="Yazıyı küçült">A−</button>
           <button class="btn sm" id="ed-plus" title="Yazıyı büyüt">A+</button>
         </div>
+        <div class="ed-tools" role="toolbar" aria-label="Gelişmiş kod düzenleme araçları">
+          <button class="btn sm" data-editor-action="editor.action.triggerSuggest" title="Ctrl+Space">IntelliSense</button>
+          <button class="btn sm" data-editor-action="editor.action.triggerParameterHints" title="Ctrl+Shift+Space">Parametreler</button>
+          <button class="btn sm" data-editor-action="actions.find" title="Ctrl+F">Bul</button>
+          <button class="btn sm" data-editor-action="editor.action.startFindReplaceAction" title="Ctrl+H">Değiştir</button>
+          <button class="btn sm" data-editor-action="editor.action.quickCommand" title="F1">Komutlar</button>
+          <button class="btn sm" data-editor-action="editor.action.quickFix" title="Ctrl+.">Hızlı düzelt</button>
+          <button class="btn sm" data-editor-action="undo" title="Ctrl+Z">Geri al</button>
+          <button class="btn sm" data-editor-action="redo" title="Ctrl+Y">Yinele</button>
+          <span class="spacer"></span>
+          <label class="chk sm"><input type="checkbox" id="ed-typecheck" checked> JS tür denetimi</label>
+          <label class="chk sm"><input type="checkbox" id="ed-minimap" checked> Mini harita</label>
+        </div>
         <div id="editor"><div class="empty" id="ed-loading">Editör yükleniyor…</div></div>
+        <button id="ed-problems" class="ed-problems-toggle" type="button" aria-expanded="false" aria-controls="ed-problem-panel" title="Ctrl+Shift+M">Sorunlar · 0 hata, 0 uyarı</button>
+        <section id="ed-problem-panel" class="ed-problem-panel" aria-label="Kod hataları ve uyarıları" hidden>
+          <div id="ed-problem-list"></div>
+        </section>
         <div class="ed-status">
           <span id="st-pos">Satır 1, Sütun 1</span><span id="st-lang">html</span><span id="st-err">0 hata</span>
           <span class="grow"></span><span>Ctrl+Space öneri · Ctrl+F ara · Ctrl+Enter uygula · F1 komutlar</span>

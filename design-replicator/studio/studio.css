@@ -61,7 +61,7 @@ input[type=text], input:not([type]), select, textarea { width:100%; padding:8px 
 /* ---- editör çalışma alanı ---- */
 .work { flex:1; display:flex; min-height:0; }
 .pane { flex:1 1 0; min-width:0; min-height:0; }
-.pane[hidden] { display:none; }
+.pane[hidden], #v-preview[hidden] { display:none; }
 .work > #v-preview { border-right:1px solid var(--line); }
 .code-pane { display:flex; flex-direction:column; background:var(--code); }
 .ed-bar { display:flex; align-items:center; gap:6px; padding:6px 8px; background:var(--panel); border-bottom:1px solid var(--line); flex-wrap:wrap; }
@@ -109,3 +109,17 @@ input[type=text], input:not([type]), select, textarea { width:100%; padding:8px 
 .adapt-dialog::backdrop{background:#0009;backdrop-filter:blur(4px)}.adapt-dialog h2{flex:1;font:normal 26px Georgia,serif;margin:0}.adapt-dialog .stack{margin:14px 0}.adapt-dialog iframe{width:100%;height:400px;margin-top:20px;border:1px solid var(--line);background:white}
 .adapt-dialog :focus-visible{outline:3px solid #bb653c;outline-offset:2px}.adapt-dialog iframe[hidden]{display:none}
 @media(max-width:700px){.lib-pro-intro{align-items:start;flex-direction:column}.adapt-dialog .row{flex-wrap:wrap}}
+
+/* Compact workspace tools and keyboard-accessible diagnostics. */
+.ed-tools { display:flex; align-items:center; flex-wrap:wrap; gap:6px; padding:7px 10px; border-bottom:1px solid var(--line); background:var(--panel); }
+.ed-tools .btn { border-radius:6px; font-weight:500; }
+.ed-tools .chk { white-space:nowrap; }
+.ed-problems-toggle { border:0; border-top:1px solid var(--line); padding:7px 12px; text-align:left; cursor:pointer; background:var(--panel); color:var(--text); font:12px/1.5 ui-monospace,Consolas,monospace; }
+.ed-problem-panel { flex:0 0 auto; max-height:180px; overflow:auto; border-top:1px solid var(--line); background:var(--code); }
+.ed-problem-panel[hidden] { display:none; }
+.ed-problem-panel .hint { padding:12px; }
+.ed-problem { display:flex; gap:12px; width:100%; padding:7px 12px; border:0; border-bottom:1px solid var(--line); text-align:left; background:transparent; color:var(--text); cursor:pointer; font:12px/1.5 ui-monospace,Consolas,monospace; }
+.ed-problem:hover { background:var(--chip); }
+.ed-problem-location { flex:0 0 210px; color:var(--mut); }
+.ed-tools button:focus-visible, .ed-problem:focus-visible, .ed-problems-toggle:focus-visible { outline:2px solid #478ed1; outline-offset:-2px; }
+@media(max-width:700px) { .ed-problem { flex-direction:column; gap:2px; } .ed-problem-location { flex-basis:auto; } }
