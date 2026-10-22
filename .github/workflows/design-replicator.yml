@@ -1,0 +1,51 @@
+name: Design Replicator package
+on:
+  pull_request:
+    paths: ['design-replicator/**', '.github/workflows/design-replicator.yml']
+  push:
+    branches: [main]
+    paths: ['design-replicator/**', '.github/workflows/design-replicator.yml']
+    tags: ['design-replicator-v*']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: design-replicator
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: node --test server/server.test.mjs
+      - run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+          python3 -m http.server 8790 --bind 127.0.0.1 &
+          node tools/test-ui.cjs
+      - run: python3 tools/release.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Design-Replicator
+          path: |
+            design-replicator/release/*1.4.0*.zip
+            design-replicator/release/SHA256SUMS.txt
+            design-replicator/release/RELEASE-NOTES-1.4.0.md
+  release:
+    if: startsWith(github.ref, 'refs/tags/design-replicator-v')
+    needs: package
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: Design-Replicator
+          path: release
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: gh release create "$RELEASE_TAG" release/*.zip release/SHA256SUMS.txt --repo "$GITHUB_REPOSITORY" --title "Design Replicator 1.4.0" --notes-file release/RELEASE-NOTES-1.4.0.md

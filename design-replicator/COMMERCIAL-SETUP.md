@@ -64,3 +64,10 @@ Chrome ödeme politikası:
 https://developer.chrome.com/docs/webstore/program-policies/accepting-payment
 Stripe Checkout:
 https://docs.stripe.com/api/checkout/sessions/create
+
+## 1.4 mağaza paketi
+Geliştirme ZIP'i: `python tools/release.py`. Canlı hizmet hazır olduğunda:
+```sh
+python tools/release.py --store --service-url https://uyelik.example.com --privacy-url https://example.com/privacy --support-email destek@example.com --publisher "İşletme Adı"
+```
+Adresler örnektir; gerçek işletme bilgileri gerekir. Araç HTTPS hizmetindeki `/v1/catalog` üzerinden production, aylık ödeme ve en az bir AI sağlayıcısı hazırlığını doğrular; eksik yapılandırmada mağaza paketi üretmez. ZIP içine yalnız kamuya açık hizmet adresi ve mağaza bilgileri yerleştirilir, anahtarlar dahil edilmez. Chrome mağazasına yükleme, ödeme işletme hesabı ve mağaza incelemesi ayrıca tamamlanır. Pro alanı yapılandırılmış fiyatı/kotayı ve sağlayıcı durumunu gösterir.

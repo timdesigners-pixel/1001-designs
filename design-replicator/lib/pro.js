@@ -1,7 +1,8 @@
+import { DEFAULT_PRO_SERVICE } from './service-default.js';
 // Paid access is always checked online. A local flag never grants a subscription.
 export async function serviceConfig() {
   const { proService = '' } = await chrome.storage.local.get('proService');
-  const u = new URL(proService || 'http://localhost:8787');
+  const u = new URL(proService || DEFAULT_PRO_SERVICE || 'http://localhost:8787');
   if (u.protocol !== 'https:' && !(u.protocol === 'http:' && ['localhost', '127.0.0.1'].includes(u.hostname))) throw new Error('Üyelik hizmeti HTTPS kullanmalı.');
   if (u.username || u.password || u.search || u.hash) throw new Error('Geçersiz hizmet adresi.');
   return u.origin;

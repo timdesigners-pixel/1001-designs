@@ -125,6 +125,19 @@ export function createService(env = process.env, dependencies = {}) {
         res.writeHead(200, { 'Content-Type': 'text/plain; charset=utf-8' });
         res.end(path === '/success' ? 'Ödeme adımı tamamlandı. Eklentide Pro → Üyeliği yenile seçin. Erişim ödeme sağlayıcısından doğrulanır.' : 'Ödeme tamamlanmadı. Eklentiye dönebilirsiniz.'); return;
       }
+      if (req.method === 'GET' && path === '/v1/catalog') {
+        const providers = { openai: !!env.OPENAI_API_KEY, claude: !!env.ANTHROPIC_API_KEY && !!env.CLAUDE_MODEL };
+        const billing = !!env.STRIPE_SECRET_KEY && !!env.STRIPE_PRICE_ID;
+        let price = null;
+        if (billing) {
+          const item = await stripe('prices/' + encodeURIComponent(env.STRIPE_PRICE_ID));
+          if (item.active && item.type === 'recurring' && item.recurring?.interval === 'month' && item.recurring?.interval_count === 1 && Number.isSafeInteger(item.unit_amount) && item.unit_amount > 0) {
+            price = { amount: item.unit_amount, currency: item.currency, interval: 'month' };
+          }
+        }
+        json(200, { billing: billing && !!price, price, providers, quota: Number(env.MONTHLY_ADAPT_LIMIT || 50),
+          mode: env.NODE_ENV === 'production' ? 'production' : 'development' }); return;
+      }
       if (req.method === 'GET' && path === '/health') { json(200, { ok: true }); return; }
       if (req.method === 'POST' && path === '/webhooks/stripe') {
         const raw = await body(req);
@@ -169,6 +182,8 @@ export function createService(env = process.env, dependencies = {}) {
       }
       if (path === '/v1/billing/checkout') {
         if (!env.STRIPE_PRICE_ID) fail(503,'Pro fiyatı henüz yapılandırılmadı.');
+        const price = await stripe('prices/' + encodeURIComponent(env.STRIPE_PRICE_ID));
+        if (!price.active || price.type !== 'recurring' || price.recurring?.interval !== 'month' || price.recurring?.interval_count !== 1 || !Number.isSafeInteger(price.unit_amount) || price.unit_amount <= 0) fail(503,'Aktif aylık ücretli Pro fiyatı gerekli.');
         if (await entitlement(user)) fail(409,'Pro zaten aktif. Aboneliği yönet seçeneğini kullanın.');
         if (!user.customer) {
           const customer = await stripe('customers', { email:user.email,'metadata[user_id]':user.id }, 'customer-' + user.id);

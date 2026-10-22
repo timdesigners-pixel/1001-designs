@@ -5,6 +5,7 @@ export function initAdapt({ getDocument, applyDocument, log, isBusy }) {
   dialog.innerHTML = '<form method="dialog"><div class="row"><span class="pro-badge">PRO</span><h2>Binbir Dizayn · Uyarla</h2><button class="btn" value="cancel" aria-label="Kapat">×</button></div></form>' +
     '<p id="adapt-name"></p><p class="hint">Mevcut tasarımın bir kopyası üzerinde çalışır. Kaynak web sitesi değişmez.</p>' +
     '<label class="stack">Hedef alan<select id="adapt-target"></select></label>' +
+    '<button class="btn" id="adapt-pick" type="button">Önizlemede hedef alanı seç</button><iframe id="adapt-picker" sandbox="allow-scripts" title="Hedef alan seçimi" hidden></iframe>' +
     '<label class="stack">Yerleştirme<select id="adapt-place"><option value="append">Alanın sonuna ekle</option><option value="prepend">Alanın başına ekle</option><option value="replace">Seçili alanı değiştir</option></select></label>' +
     '<label class="stack">Uyarlama<select id="adapt-mode"><option value="design-to-content">Bileşenin tasarımını mevcut içeriğe uyarla</option><option value="content-to-design">İçeriğimi bileşenin tasarımına uygula</option></select></label>' +
     '<label class="stack">İçerik ve talimat<textarea id="adapt-content" rows="4" maxlength="10000" placeholder="Başlık, açıklama, buton metni veya özel talimat…"></textarea></label>' +
@@ -14,8 +15,24 @@ export function initAdapt({ getDocument, applyDocument, log, isBusy }) {
     '<iframe id="adapt-preview" sandbox="allow-scripts" title="Uyarlama önizlemesi" hidden></iframe>';
   document.body.append(dialog);
   const $ = s => dialog.querySelector(s);
-  let selected, original, candidate, applied, previewDocument, revision = 0, controller;
+  let selected, original, candidate, applied, previewDocument, revision = 0, controller, pickNonce;
   window.addEventListener('message', event => {
+    if (event.source === $('#adapt-picker').contentWindow) {
+      if (event.data?.type === 'picker-ready' && dialog.open && pickNonce) event.source.postMessage({type:'pick-document',html:original,nonce:pickNonce}, '*');
+      if (event.data?.type === 'picked-target' && event.data.nonce === pickNonce && dialog.open) {
+        const selector = event.data.selector;
+        if (typeof selector !== 'string' || selector.length > 2000) return;
+        const doc = new DOMParser().parseFromString(original, 'text/html');
+        let target; try { target = doc.querySelector(selector); } catch { return; }
+        if (!target || !doc.body.contains(target)) return;
+        const option = Object.assign(document.createElement('option'), {value:selector,textContent:'Seçilen alan · '+target.tagName.toLowerCase()+' · '+(target.textContent||'').trim().slice(0,70)});
+        const existing=[...$('#adapt-target').options].find(o=>o.value===selector);
+        if(existing)existing.textContent=option.textContent;else $('#adapt-target').append(option);
+        $('#adapt-target').value = selector; invalidate();
+        $('#adapt-picker').hidden = true; pickNonce = null; $('#adapt-status').textContent = 'Hedef alan seçildi. Yerleştirme biçimini ve içeriği belirleyin.';
+      }
+      return;
+    }
     if (event.source === $('#adapt-preview').contentWindow && event.data?.type === 'ready' && previewDocument) {
       event.source.postMessage({ type: 'render', html: previewDocument }, '*');
     }
@@ -47,7 +64,8 @@ export function initAdapt({ getDocument, applyDocument, log, isBusy }) {
     $('#adapt-preview').hidden = true;
   }
   dialog.querySelectorAll('select, textarea, input').forEach(el => el.addEventListener('input', invalidate));
-  dialog.addEventListener('close', () => { revision++; controller?.abort(); });
+  dialog.addEventListener('close', () => { revision++; controller?.abort(); pickNonce=null; $('#adapt-picker').hidden=true; });
+  $('#adapt-pick').onclick=()=>{pickNonce=crypto.randomUUID();$('#adapt-picker').hidden=false;$('#adapt-picker').src='../sandbox/target-picker.html?'+Date.now();$('#adapt-status').textContent='Sayfa önizlemesinde bileşeni eklemek istediğiniz alana tıklayın.';};
   $('#adapt-generate').onclick = async () => {
     if (!$('#adapt-consent').checked) { $('#adapt-status').textContent = 'Devam etmek için veri gönderimini onaylayın.'; return; }
     invalidate(); const current = revision; controller = new AbortController();
