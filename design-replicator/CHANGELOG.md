@@ -1,5 +1,12 @@
 # Değişiklik günlüğü
 
+## 1.4.0 — 2026-10-23
+- Pro Uyarla panelinde sayfa önizlemesinden tıklayarak hedef alan seçimi.
+- Aylık ücretli fiyat, kota ve yapılandırılmış AI sağlayıcıları için sunucu kataloğu.
+- Geçerli aylık ücretli fiyat olmadan Checkout açılmaz.
+- İşletmeci HTTPS hizmeti ve mağaza bilgilerini ZIP içine yerleştiren doğrulamalı mağaza paketleme seçeneği.
+- ChatGPT / Claude bireysel aboneliklerinin API kredisi olmadığı açıkça belirtilir.
+
 ## 1.3.0 — 2026-10-20
 - Gelişmiş editör araç çubuğu: IntelliSense, parametre yardımı, Bul/Değiştir, komutlar, hızlı düzeltme, geri al/yinele.
 - HTML'deki öğe türlerini JavaScript IntelliSense'e aktaran yerel tür tanımları.

@@ -4,7 +4,7 @@ const fs = require('node:fs/promises');
 const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 (async () => {
-  const browser = await chromium.launch({ headless: true });
+  const browser = await chromium.launch({ headless: true, executablePath:process.env.CHROME_PATH || undefined, args:['--no-sandbox'] });
   try {
     const context = await browser.newContext({ viewport: { width: 1280, height: 800 } });
     await context.addInitScript(() => {
@@ -21,6 +21,7 @@ const root = path.resolve(__dirname, '..');
     });
     let paid = false;
     await context.route('http://localhost:8787/**', async route => {
+      if(route.request().url().endsWith('/v1/catalog'))return route.fulfill({json:{billing:true,price:{amount:19900,currency:'try'},providers:{openai:true,claude:false},quota:50,mode:'development'}});
       if (route.request().url().endsWith('/v1/adapt')) {
         assert.equal(paid, true);
         const data = route.request().postDataJSON();
@@ -35,6 +36,7 @@ const root = path.resolve(__dirname, '..');
     page.on('pageerror', error => errors.push(error.message));
     await page.goto('http://127.0.0.1:8790/pro/pro.html');
     await page.getByText('Satın almak için giriş yapın veya hesap oluşturun.').waitFor();
+    assert((await page.locator('#plan').innerText()).includes('199')); assert(await page.locator('#buy').isDisabled());
     await page.setViewportSize({ width: 390, height: 844 });
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
     await page.setViewportSize({ width: 1280, height: 800 });
@@ -52,6 +54,12 @@ const root = path.resolve(__dirname, '..');
     await page.screenshot({ path: path.join(root, 'store-assets/pro-library.png') });
     await page.getByRole('button', { name: 'Uyarla PRO' }).nth(1).click();
     await page.locator('dialog').waitFor({ state: 'visible' });
+    await page.locator('#adapt-pick').click();
+    await page.frameLocator('#adapt-picker').locator('body').waitFor();
+    await page.waitForTimeout(300);
+    await page.frameLocator('#adapt-picker').locator('body').click({position:{x:12,y:12}});
+    await page.locator('#adapt-picker').waitFor({state:'hidden'});
+    assert((await page.locator('#adapt-target option:checked').innerText()).includes('Seçilen alan'));
     await page.locator('#adapt-generate').click();
     await page.getByText('Devam etmek için veri gönderimini onaylayın.').waitFor();
     await page.locator('#adapt-consent').check();

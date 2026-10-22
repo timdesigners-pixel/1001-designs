@@ -21,12 +21,13 @@ test('only active, unexpired subscriptions of the configured price are paid', ()
   assert.equal(isPaidSubscription({...sub,items:{data:[{...item,current_period_end:1}]}},'price_pro'),false);
 });
 test('accounts, payment enforcement, quota, failure refund, cancellation and logout', async () => {
-  let paid = false, failModel = false, stripeCalls = 0;
+  let paid = false, failModel = false, stripeCalls = 0, priceInterval='month';
   const env = { DB_PATH:':memory:', ALLOWED_ORIGINS:'chrome-extension://test', STRIPE_SECRET_KEY:'test',
     STRIPE_PRICE_ID:'price_pro', OPENAI_API_KEY:'test', MONTHLY_ADAPT_LIMIT:'1' };
   const mockFetch = async (url) => {
     if (url.includes('api.stripe.com')) {
       stripeCalls++;
+      if (url.includes('/prices/')) return Response.json({active:true,type:'recurring',recurring:{interval:priceInterval,interval_count:1},unit_amount:19900,currency:'try'});
       if (url.endsWith('/customers')) return Response.json({id:'cus_test'});
       if (url.includes('/checkout/sessions')) return Response.json({url:'https://checkout.stripe.com/test'});
       if (url.includes('/subscriptions?')) return Response.json({data:paid ? [{status:'active',items:{data:[{price:{id:'price_pro'},current_period_end:Math.floor(Date.now()/1000)+3600}]}}] : []});
@@ -48,12 +49,14 @@ test('accounts, payment enforcement, quota, failure refund, cancellation and log
     assert.equal((await request('/health',undefined,'https://evil.example')).status,403);
     assert.equal((await request('/health',undefined,'chrome-extension://test')).status,200);
     assert.equal((await (await request('/v1/me')).json()).pro,false);
+    const catalog=await (await request('/v1/catalog')).json();assert.equal(catalog.billing,true);assert.equal(catalog.price.amount,19900);assert.equal(catalog.providers.openai,true);assert.equal(catalog.providers.claude,false);
     assert.equal((await request('/v1/adapt',{})).status,401);
     assert.equal((await request('/v1/auth/register',{email:'invalid',password:'short'})).status,400);
     const registered = await request('/v1/auth/register',{email:'demo@example.com',password:'correct-long-password'});
     assert.equal(registered.status,200); token=(await registered.json()).token;
     assert.equal((await (await request('/v1/me')).json()).pro,false);
     assert.equal((await request('/v1/adapt',{})).status,403);
+    priceInterval='year';assert.equal((await request('/v1/billing/checkout',{})).status,503);assert.equal((await (await request('/v1/catalog')).json()).billing,false);priceInterval='month';
     const checkout = await request('/v1/billing/checkout',{});
     assert.equal(checkout.status,200);
     assert.equal((await (await request('/v1/me')).json()).pro,false,'checkout URL must never grant Pro');

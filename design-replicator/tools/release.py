@@ -9,7 +9,33 @@ Yapilanlar:
      release/design-replicator-<surum>-source.zip (tools/ dahil)
   5. SHA256SUMS.txt + RELEASE-NOTES-<surum>.md
 """
-import hashlib, json, os, re, subprocess, sys, zipfile
+import argparse, hashlib, json, os, re, subprocess, sys, zipfile
+from urllib.parse import urlparse
+from urllib.request import urlopen
+
+parser = argparse.ArgumentParser(description='Build a development ZIP or verify and build an operator-configured store ZIP.')
+parser.add_argument('--store', action='store_true')
+parser.add_argument('--service-url', default='')
+parser.add_argument('--privacy-url', default='')
+parser.add_argument('--support-email', default='')
+parser.add_argument('--publisher', default='')
+args = parser.parse_args()
+if args.service_url:
+    u = urlparse(args.service_url)
+    if u.scheme != 'https' or not u.hostname or u.username or u.password or u.query or u.fragment or u.path not in ('', '/'):
+        parser.error('--service-url must be an HTTPS origin without credentials, path, query or fragment')
+    args.service_url = args.service_url.rstrip('/')
+if args.store:
+    privacy = urlparse(args.privacy_url)
+    if not args.service_url or privacy.scheme != 'https' or not privacy.hostname or privacy.username or privacy.password or not re.fullmatch(r'[^\s@]+@[^\s@]+\.[^\s@]+', args.support_email) or not args.publisher.strip():
+        parser.error('Store packaging requires --service-url, --privacy-url, --support-email and --publisher')
+    try:
+        with urlopen(args.service_url + '/v1/catalog', timeout=20) as response:
+            catalog = json.loads(response.read(100000))
+        if catalog.get('mode') != 'production' or not catalog.get('billing') or not any(catalog.get('providers', {}).values()):
+            parser.error('Production billing and at least one AI provider must be ready')
+    except Exception as error:
+        parser.error('Service readiness could not be verified: ' + type(error).__name__)
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 OUT = os.path.join(ROOT, 'release')
@@ -101,7 +127,12 @@ def build(name, files):
     path = os.path.join(OUT, name)
     with zipfile.ZipFile(path, 'w', zipfile.ZIP_DEFLATED, compresslevel=9) as z:
         for src, dst in files:
-            z.write(os.path.join(ROOT, src), dst)
+            if dst == 'lib/service-default.js' and args.service_url:
+                z.writestr(dst, 'export const DEFAULT_PRO_SERVICE = ' + json.dumps(args.service_url) + ';\n')
+            else:
+                z.write(os.path.join(ROOT, src), dst)
+        if args.store:
+            z.writestr('pro/store-info.json', json.dumps({'publisher':args.publisher,'privacy':args.privacy_url,'support':args.support_email},ensure_ascii=False))
     return path
 
 zip_rt = build('design-replicator-%s.zip' % version, runtime)
