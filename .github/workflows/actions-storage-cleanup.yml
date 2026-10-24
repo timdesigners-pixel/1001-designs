@@ -1,0 +1,64 @@
+name: One-time Actions artifact cleanup
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/actions-storage-cleanup.yml']
+permissions:
+  contents: read
+  actions: write
+concurrency:
+  group: actions-storage-cleanup
+  cancel-in-progress: false
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Delete approved duplicates after validating retained copies
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json, os, urllib.request, urllib.error
+          base = os.environ["GITHUB_API_URL"] + "/repos/" + os.environ["GITHUB_REPOSITORY"]
+          headers = {"Authorization": "Bearer " + os.environ["GH_TOKEN"], "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28"}
+          def api(path, method="GET"):
+              try:
+                  with urllib.request.urlopen(urllib.request.Request(base + path, headers=headers, method=method)) as r:
+                      data = r.read()
+                      return json.loads(data) if data else None
+              except urllib.error.HTTPError as e:
+                  if e.code == 404 and method == "GET":
+                      return None
+                  raise
+          pairs = [[12461202320,12460239342]]
+          deleted = 0
+          freed = 0
+          for target_id, keep_id in pairs:
+              target = api("/actions/artifacts/" + str(target_id))
+              if target is None:
+                  print("Already absent:", target_id)
+                  continue
+              keep = api("/actions/artifacts/" + str(keep_id))
+              if not keep or keep["expired"]:
+                  raise RuntimeError("Missing usable retained artifact: " + str(keep_id))
+              if target["name"] != keep["name"] or target["workflow_run"]["head_sha"] != keep["workflow_run"]["head_sha"]:
+                  raise RuntimeError("Artifact name or source commit mismatch")
+              retained_run = api("/actions/runs/" + str(keep["workflow_run"]["id"]))
+              target_run = api("/actions/runs/" + str(target["workflow_run"]["id"]))
+              if not retained_run or retained_run["conclusion"] != "success" or retained_run["status"] != "completed":
+                  raise RuntimeError("Retained artifact does not belong to a successful completed run")
+              if not target_run or target_run["status"] != "completed":
+                  raise RuntimeError("Target run still active")
+              api("/actions/artifacts/" + str(target_id), "DELETE")
+              if api("/actions/artifacts/" + str(target_id)) is not None:
+                  raise RuntimeError("Deletion verification failed")
+              deleted += 1
+              freed += target["size_in_bytes"]
+              print("Deleted", target_id, "retained", keep_id, "bytes", target["size_in_bytes"])
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as summary:
+              summary.write(f"Deleted {deleted} duplicate artifacts; freed {freed} bytes ({freed / 2**30:.3f} GiB). Retained successful artifacts and Releases were not deleted.\\n")
+          print("RESULT", json.dumps({"deleted": deleted, "freed_bytes": freed}))
+          
+          PY
