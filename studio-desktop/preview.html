@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<!-- Önizleme çerçevesi: ana sayfada sandbox="allow-scripts" ile (opak köken) açılır; ana pencereye, depolamaya ve ağa erişemez.
+     Bileşenin satır içi CSS/JS'i çalışabilsin diye bu belgede 'unsafe-inline' vardır; ağ kapalıdır. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data: blob:; font-src data:; media-src data:; connect-src 'none'; form-action 'none'; base-uri 'none'">
+<title>Önizleme</title>
+<style>html,body{margin:0}body{min-height:100vh;box-sizing:border-box;display:grid;place-items:center;padding:24px}</style>
+</head>
+<body>
+<script>
+(() => {
+  let done = false;
+  window.addEventListener("message", (e) => {
+    if (e.source !== window.parent || done) return;
+    const d = e.data;
+    if (!d || d.type !== "render" || typeof d.html !== "string") return;
+    done = true;
+    try {
+      document.body.style.background = typeof d.bg === "string" && /^#[0-9a-f]{3,6}$/i.test(d.bg) ? d.bg : "";
+      const st = document.createElement("style");
+      st.textContent = String(d.css || "");
+      document.head.appendChild(st);
+      document.body.innerHTML = d.html;
+      // Formlar gönderilemez, bağlantılar gezinmez (önizleme içinde kalınır).
+      document.addEventListener("submit", (ev) => ev.preventDefault(), true);
+      document.addEventListener("click", (ev) => { const a = ev.target.closest && ev.target.closest("a[href]"); if (a) ev.preventDefault(); }, true);
+      if (d.js) { const sc = document.createElement("script"); sc.textContent = String(d.js); document.body.appendChild(sc); }
+      window.parent.postMessage({ type: "rendered" }, "*");
+    } catch (err) {
+      window.parent.postMessage({ type: "error", message: String(err && err.message || err) }, "*");
+    }
+  });
+  window.addEventListener("error", (ev) => window.parent.postMessage({ type: "error", message: String(ev.message || "") }, "*"));
+  window.parent.postMessage({ type: "ready" }, "*");
+})();
+</script>
+</body>
+</html>
