@@ -1,0 +1,446 @@
+/* ==========================================================================
+   PluginLabs Design System — Komponentler (pl-components.css) v1.0.0
+   Önce pl-tokens.css yüklenmelidir. Tüm sınıflar pl- önekli, @layer pl içinde.
+   Sabit renk/boşluk YOK — yalnız var(--pl-…).
+   ========================================================================== */
+@layer pl {
+
+/* ---------- Kök ---------- */
+[data-pl] { font-family: var(--pl-font-sans); color: var(--pl-fg-2); font-size: var(--pl-text-md); line-height: var(--pl-leading); -webkit-font-smoothing: antialiased; }
+[data-pl] :where(*, *::before, *::after) { box-sizing: border-box; }
+.pl-ico { width: 16px; height: 16px; flex: none; stroke: currentColor; fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+.pl-ico--20 { width: 20px; height: 20px; } .pl-ico--24 { width: 24px; height: 24px; }
+.pl-label { font-family: var(--pl-font-mono); font-size: var(--pl-text-2xs); letter-spacing: var(--pl-tracking-label); text-transform: uppercase; color: var(--pl-fg-3); font-weight: var(--pl-weight-medium); }
+.pl-num { font-family: var(--pl-font-mono); font-variant-numeric: tabular-nums; }
+.pl-h1 { font-size: var(--pl-text-3xl); font-weight: 700; color: var(--pl-fg-1); line-height: var(--pl-leading-tight); margin: 0; letter-spacing: -.01em; }
+.pl-h2 { font-size: var(--pl-text-2xl); font-weight: 600; color: var(--pl-fg-1); margin: 0; }
+.pl-h3 { font-size: var(--pl-text-lg); font-weight: 600; color: var(--pl-fg-1); margin: 0; }
+.pl-muted { color: var(--pl-fg-3); font-size: var(--pl-text-sm); }
+.pl-row { display: flex; align-items: center; gap: var(--pl-space-2); flex-wrap: wrap; }
+.pl-stack { display: flex; flex-direction: column; gap: var(--pl-space-3); }
+:where([data-pl]) :focus-visible { outline: 2px solid var(--pl-line-focus); outline-offset: 2px; }
+
+/* ---------- PLC-001 Buton ---------- */
+.pl-btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--pl-space-2); height: var(--pl-control-md); padding: 0 var(--pl-space-4); border-radius: var(--pl-radius-sm); border: 1px solid transparent; font: inherit; font-size: var(--pl-text-sm); font-weight: var(--pl-weight-semibold); cursor: pointer; white-space: nowrap; transition: background var(--pl-dur-fast) var(--pl-ease), border-color var(--pl-dur-fast), color var(--pl-dur-fast), transform var(--pl-dur-fast); }
+.pl-btn:active { transform: translateY(1px); }
+.pl-btn--primary { background: var(--pl-accent); color: var(--pl-fg-on-accent); }
+.pl-btn--primary:hover { background: color-mix(in srgb, var(--pl-accent) 86%, white); }
+.pl-btn--secondary { background: var(--pl-bg-3); color: var(--pl-fg-1); border-color: var(--pl-line); }
+.pl-btn--secondary:hover { background: var(--pl-bg-4); border-color: var(--pl-line-strong); }
+.pl-btn--ghost { background: transparent; color: var(--pl-fg-2); }
+.pl-btn--ghost:hover { background: var(--pl-bg-3); color: var(--pl-fg-1); }
+.pl-btn--danger { background: var(--pl-danger-soft); color: var(--pl-danger); border-color: color-mix(in srgb, var(--pl-danger) 35%, transparent); }
+.pl-btn--danger:hover { background: color-mix(in srgb, var(--pl-danger) 24%, transparent); }
+.pl-btn--gradient { background: var(--pl-brand-gradient); color: #fff; }
+.pl-btn--sm { height: var(--pl-control-sm); padding: 0 var(--pl-space-3); font-size: var(--pl-text-xs); }
+.pl-btn--lg { height: var(--pl-control-lg); padding: 0 var(--pl-space-5); font-size: var(--pl-text-md); }
+.pl-btn--block { width: 100%; }
+.pl-btn:disabled, .pl-btn.is-disabled { opacity: .45; cursor: not-allowed; transform: none; }
+.pl-btn.is-loading { color: transparent; position: relative; pointer-events: none; }
+.pl-btn.is-loading::after { content: ""; position: absolute; width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--pl-fg-on-accent); border-right-color: transparent; animation: pl-spin .7s linear infinite; }
+
+/* ---------- PLC-002 İkon buton ---------- */
+.pl-iconbtn { display: inline-grid; place-items: center; width: var(--pl-control-md); height: var(--pl-control-md); border-radius: var(--pl-radius-sm); border: 1px solid transparent; background: transparent; color: var(--pl-fg-2); cursor: pointer; transition: background var(--pl-dur-fast), color var(--pl-dur-fast); }
+.pl-iconbtn:hover { background: var(--pl-bg-3); color: var(--pl-fg-1); }
+.pl-iconbtn--outline { border-color: var(--pl-line); background: var(--pl-bg-2); }
+.pl-iconbtn--sm { width: var(--pl-control-sm); height: var(--pl-control-sm); }
+.pl-iconbtn.is-active { background: var(--pl-accent-soft); color: var(--pl-accent); }
+
+/* ---------- PLC-003 Segment kontrol ---------- */
+.pl-segment { display: inline-flex; padding: 3px; gap: 2px; background: var(--pl-bg-3); border: 1px solid var(--pl-line); border-radius: var(--pl-radius-md); }
+.pl-segment button { height: calc(var(--pl-control-md) - 8px); padding: 0 var(--pl-space-3); border: 0; border-radius: calc(var(--pl-radius-md) - 3px); background: transparent; color: var(--pl-fg-3); font: inherit; font-size: var(--pl-text-sm); font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.pl-segment button:hover { color: var(--pl-fg-1); }
+.pl-segment button.is-active { background: var(--pl-bg-1); color: var(--pl-fg-1); box-shadow: var(--pl-shadow-sm), 0 0 0 1px var(--pl-line); }
+
+/* ---------- PLC-004 Bölünmüş buton ---------- */
+.pl-split { display: inline-flex; }
+.pl-split .pl-btn:first-child { border-radius: var(--pl-radius-sm) 0 0 var(--pl-radius-sm); }
+.pl-split .pl-btn:last-child { border-radius: 0 var(--pl-radius-sm) var(--pl-radius-sm) 0; padding: 0 var(--pl-space-2); border-left: 1px solid color-mix(in srgb, var(--pl-fg-on-accent) 25%, transparent); }
+
+/* ---------- PLC-005 Bağlantı ---------- */
+.pl-link { color: var(--pl-accent); text-decoration: none; font-weight: 500; display: inline-flex; align-items: center; gap: 4px; border-bottom: 1px solid transparent; }
+.pl-link:hover { border-bottom-color: currentColor; }
+
+/* ---------- PLC-006 Rozet / PLC-007 Durum pili / PLC-008 Etiket ---------- */
+.pl-badge { display: inline-flex; align-items: center; gap: 4px; height: 20px; padding: 0 7px; border-radius: var(--pl-radius-xs); font-family: var(--pl-font-mono); font-size: 10.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; background: var(--pl-bg-4); color: var(--pl-fg-2); }
+.pl-badge--accent { background: var(--pl-accent-soft); color: var(--pl-accent); }
+.pl-badge--success { background: var(--pl-success-soft); color: var(--pl-success); }
+.pl-badge--warning { background: var(--pl-warning-soft); color: var(--pl-warning); }
+.pl-badge--danger { background: var(--pl-danger-soft); color: var(--pl-danger); }
+.pl-badge--info { background: var(--pl-info-soft); color: var(--pl-info); }
+.pl-badge--pro { background: linear-gradient(135deg, color-mix(in srgb, var(--pl-gold) 22%, transparent), color-mix(in srgb, var(--pl-gold) 8%, transparent)); color: var(--pl-gold); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pl-gold) 40%, transparent); }
+.pl-badge--count { min-width: 18px; height: 18px; padding: 0 5px; border-radius: var(--pl-radius-full); justify-content: center; background: var(--pl-danger); color: #fff; letter-spacing: 0; }
+.pl-status { display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 10px 0 8px; border-radius: var(--pl-radius-full); border: 1px solid var(--pl-line); background: var(--pl-bg-2); font-size: var(--pl-text-xs); font-weight: 500; color: var(--pl-fg-2); }
+.pl-status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--pl-fg-4); }
+.pl-status--online::before { background: var(--pl-success); box-shadow: 0 0 0 3px var(--pl-success-soft); }
+.pl-status--syncing::before { background: var(--pl-info); animation: pl-pulse 1.4s var(--pl-ease) infinite; }
+.pl-status--warning::before { background: var(--pl-warning); }
+.pl-status--error::before { background: var(--pl-danger); }
+.pl-tag { display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 6px 0 10px; border-radius: var(--pl-radius-full); background: var(--pl-bg-3); border: 1px solid var(--pl-line); color: var(--pl-fg-2); font-size: var(--pl-text-xs); }
+.pl-tag button { width: 18px; height: 18px; border-radius: 50%; border: 0; background: transparent; color: var(--pl-fg-3); display: grid; place-items: center; cursor: pointer; padding: 0; }
+.pl-tag button:hover { background: var(--pl-bg-4); color: var(--pl-fg-1); }
+.pl-tag.is-selected { background: var(--pl-accent-soft); border-color: var(--pl-accent-line); color: var(--pl-accent); }
+
+/* ---------- PLC-009 Avatar / PLC-010 Avatar grubu ---------- */
+.pl-avatar { width: 32px; height: 32px; border-radius: 50%; display: inline-grid; place-items: center; background: var(--pl-bg-4); color: var(--pl-fg-1); font-size: var(--pl-text-xs); font-weight: 600; flex: none; position: relative; }
+.pl-avatar--sm { width: 24px; height: 24px; font-size: 10px; } .pl-avatar--lg { width: 44px; height: 44px; font-size: var(--pl-text-md); }
+.pl-avatar--accent { background: var(--pl-accent-soft); color: var(--pl-accent); }
+.pl-avatar.is-online::after { content: ""; position: absolute; right: -1px; bottom: -1px; width: 10px; height: 10px; border-radius: 50%; background: var(--pl-success); border: 2px solid var(--pl-bg-1); }
+.pl-avatars { display: inline-flex; } .pl-avatars .pl-avatar { box-shadow: 0 0 0 2px var(--pl-bg-1); } .pl-avatars .pl-avatar + .pl-avatar { margin-left: -8px; }
+
+/* ---------- PLC-011 Kbd / PLC-012 Ayraç ---------- */
+.pl-kbd { display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 5px; border-radius: var(--pl-radius-xs); border: 1px solid var(--pl-line-strong); border-bottom-width: 2px; background: var(--pl-bg-2); font-family: var(--pl-font-mono); font-size: 10.5px; color: var(--pl-fg-2); }
+.pl-divider { height: 1px; background: var(--pl-line); border: 0; margin: var(--pl-space-3) 0; width: 100%; }
+.pl-divider--label { display: flex; align-items: center; gap: var(--pl-space-3); height: auto; background: none; }
+.pl-divider--label::before, .pl-divider--label::after { content: ""; flex: 1; height: 1px; background: var(--pl-line); }
+
+/* ---------- PLC-013 Spinner / PLC-014 İskelet ---------- */
+.pl-spinner { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--pl-bg-4); border-top-color: var(--pl-accent); animation: pl-spin .8s linear infinite; display: inline-block; }
+.pl-spinner--lg { width: 28px; height: 28px; border-width: 3px; }
+.pl-skeleton { border-radius: var(--pl-radius-sm); background: linear-gradient(90deg, var(--pl-bg-3) 0%, var(--pl-bg-4) 50%, var(--pl-bg-3) 100%); background-size: 200% 100%; animation: pl-shimmer 1.4s linear infinite; }
+
+/* ---------- PLC-015 Tooltip ---------- */
+.pl-tooltip { display: inline-block; padding: 6px 9px; border-radius: var(--pl-radius-sm); background: var(--pl-fg-1); color: var(--pl-bg-0); font-size: var(--pl-text-xs); font-weight: 500; box-shadow: var(--pl-shadow-md); position: relative; }
+.pl-tooltip::after { content: ""; position: absolute; left: 50%; bottom: -4px; width: 8px; height: 8px; background: inherit; transform: translateX(-50%) rotate(45deg); }
+
+/* ---------- Form temel ---------- */
+.pl-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.pl-field__label { font-size: var(--pl-text-sm); font-weight: 500; color: var(--pl-fg-1); display: flex; justify-content: space-between; }
+.pl-field__help { font-size: var(--pl-text-xs); color: var(--pl-fg-3); }
+.pl-field.is-error .pl-field__help { color: var(--pl-danger); }
+.pl-field.is-error .pl-input { border-color: var(--pl-danger); box-shadow: 0 0 0 3px var(--pl-danger-soft); }
+.pl-input, .pl-select, .pl-textarea { width: 100%; height: var(--pl-control-md); padding: 0 var(--pl-space-3); border-radius: var(--pl-radius-sm); border: 1px solid var(--pl-line); background: var(--pl-bg-3); color: var(--pl-fg-1); font: inherit; font-size: var(--pl-text-sm); transition: border-color var(--pl-dur-fast), box-shadow var(--pl-dur-fast); }
+.pl-input::placeholder, .pl-textarea::placeholder { color: var(--pl-fg-4); }
+.pl-input:hover, .pl-select:hover, .pl-textarea:hover { border-color: var(--pl-line-strong); }
+.pl-input:focus, .pl-select:focus, .pl-textarea:focus { outline: none; border-color: var(--pl-accent); box-shadow: var(--pl-glow); }
+.pl-textarea { height: auto; min-height: 84px; padding: var(--pl-space-2) var(--pl-space-3); resize: vertical; line-height: var(--pl-leading); }
+.pl-select { appearance: none; padding-right: 32px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%237b869c' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='m4 6 4 4 4-4'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; }
+.pl-inputwrap { position: relative; display: flex; align-items: center; }
+.pl-inputwrap > .pl-ico { position: absolute; left: 10px; color: var(--pl-fg-3); pointer-events: none; }
+.pl-inputwrap > .pl-input { padding-left: 34px; }
+.pl-inputwrap > .pl-kbd { position: absolute; right: 8px; }
+.pl-inputwrap > .pl-input:has(~ .pl-kbd) { padding-right: 48px; }
+
+/* ---------- PLC-020 Onay kutusu / PLC-021 Radyo ---------- */
+.pl-check, .pl-radio { display: inline-flex; align-items: center; gap: var(--pl-space-2); cursor: pointer; color: var(--pl-fg-1); font-size: var(--pl-text-sm); }
+.pl-check input, .pl-radio input { appearance: none; margin: 0; width: 18px; height: 18px; border: 1.5px solid var(--pl-line-strong); background: var(--pl-bg-3); display: grid; place-items: center; cursor: pointer; transition: all var(--pl-dur-fast); flex: none; }
+.pl-check input { border-radius: var(--pl-radius-xs); }
+.pl-radio input { border-radius: 50%; }
+.pl-check input:checked { background: var(--pl-accent); border-color: var(--pl-accent); }
+.pl-check input:checked::after { content: ""; width: 9px; height: 5px; border-left: 2px solid var(--pl-fg-on-accent); border-bottom: 2px solid var(--pl-fg-on-accent); transform: rotate(-45deg) translate(1px, -1px); }
+.pl-check input:indeterminate { background: var(--pl-accent); border-color: var(--pl-accent); }
+.pl-check input:indeterminate::after { content: ""; width: 8px; height: 2px; background: var(--pl-fg-on-accent); }
+.pl-radio input:checked { border-color: var(--pl-accent); border-width: 5px; background: var(--pl-fg-on-accent); }
+
+/* ---------- PLC-022 Anahtar (toggle) ---------- */
+.pl-switch { display: inline-flex; align-items: center; gap: var(--pl-space-2); cursor: pointer; font-size: var(--pl-text-sm); color: var(--pl-fg-1); }
+.pl-switch input { appearance: none; margin: 0; width: 34px; height: 20px; border-radius: var(--pl-radius-full); background: var(--pl-bg-4); border: 1px solid var(--pl-line-strong); position: relative; cursor: pointer; transition: background var(--pl-dur) var(--pl-ease); flex: none; }
+.pl-switch input::after { content: ""; position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%; background: var(--pl-fg-2); transition: transform var(--pl-dur) var(--pl-ease-out), background var(--pl-dur); }
+.pl-switch input:checked { background: var(--pl-accent); border-color: var(--pl-accent); }
+.pl-switch input:checked::after { transform: translateX(14px); background: var(--pl-fg-on-accent); }
+
+/* ---------- PLC-023 Kaydırıcı ---------- */
+.pl-slider { width: 100%; appearance: none; height: 4px; border-radius: 4px; background: linear-gradient(to right, var(--pl-accent) var(--pl-val, 50%), var(--pl-bg-4) var(--pl-val, 50%)); cursor: pointer; }
+.pl-slider::-webkit-slider-thumb { appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--pl-fg-1); border: 3px solid var(--pl-accent); box-shadow: var(--pl-shadow-sm); }
+.pl-slider::-moz-range-thumb { width: 12px; height: 12px; border-radius: 50%; background: var(--pl-fg-1); border: 3px solid var(--pl-accent); }
+
+/* ---------- PLC-024 Sayı adımlayıcı ---------- */
+.pl-numstep { display: inline-flex; align-items: center; height: var(--pl-control-md); border: 1px solid var(--pl-line); border-radius: var(--pl-radius-sm); background: var(--pl-bg-3); overflow: hidden; }
+.pl-numstep button { width: 32px; height: 100%; border: 0; background: transparent; color: var(--pl-fg-2); cursor: pointer; font-size: 16px; }
+.pl-numstep button:hover { background: var(--pl-bg-4); color: var(--pl-fg-1); }
+.pl-numstep input { width: 48px; height: 100%; border: 0; border-left: 1px solid var(--pl-line); border-right: 1px solid var(--pl-line); background: transparent; text-align: center; color: var(--pl-fg-1); font-family: var(--pl-font-mono); font-size: var(--pl-text-sm); }
+
+/* ---------- PLC-025 Dosya bırakma alanı ---------- */
+.pl-dropzone { border: 1.5px dashed var(--pl-line-strong); border-radius: var(--pl-radius-lg); padding: var(--pl-space-6); display: flex; flex-direction: column; align-items: center; gap: var(--pl-space-2); text-align: center; background: var(--pl-bg-1); transition: all var(--pl-dur); color: var(--pl-fg-3); font-size: var(--pl-text-sm); }
+.pl-dropzone__icon { width: 40px; height: 40px; border-radius: var(--pl-radius-md); background: var(--pl-accent-soft); color: var(--pl-accent); display: grid; place-items: center; }
+.pl-dropzone.is-dragover { border-color: var(--pl-accent); background: var(--pl-accent-soft); }
+
+/* ---------- PLC-026 Renk seçici ---------- */
+.pl-swatches { display: flex; gap: 8px; flex-wrap: wrap; }
+.pl-swatch { width: 26px; height: 26px; border-radius: 50%; border: 0; cursor: pointer; box-shadow: inset 0 0 0 1px rgb(255 255 255 / .12); }
+.pl-swatch.is-selected { box-shadow: 0 0 0 2px var(--pl-bg-1), 0 0 0 4px var(--pl-fg-1); }
+
+/* ---------- Kart / yüzey ---------- */
+.pl-card { background: var(--pl-bg-2); border: 1px solid var(--pl-line); border-radius: var(--pl-radius-lg); padding: var(--pl-space-4); }
+.pl-card--interactive { transition: border-color var(--pl-dur), transform var(--pl-dur) var(--pl-ease), background var(--pl-dur); cursor: pointer; }
+.pl-card--interactive:hover { border-color: var(--pl-line-strong); background: color-mix(in srgb, var(--pl-bg-2) 70%, var(--pl-bg-3)); transform: translateY(-2px); }
+.pl-surface { background: var(--pl-bg-1); border: 1px solid var(--pl-line); border-radius: var(--pl-radius-lg); overflow: hidden; }
+
+/* ---------- PLC-028 Hub kenar çubuğu ---------- */
+.pl-sidebar { width: var(--pl-sidebar-w); max-width: 100%; background: var(--pl-bg-1); border-right: 1px solid var(--pl-line); padding: var(--pl-space-3); display: flex; flex-direction: column; gap: 2px; }
+.pl-sidebar__brand { display: flex; align-items: center; gap: 10px; padding: var(--pl-space-2) var(--pl-space-2) var(--pl-space-4); color: var(--pl-fg-1); font-weight: 700; }
+.pl-sidebar__section { padding: var(--pl-space-4) var(--pl-space-2) var(--pl-space-1); }
+.pl-navitem { display: flex; align-items: center; gap: 10px; height: 34px; padding: 0 10px; border-radius: var(--pl-radius-sm); color: var(--pl-fg-2); font-size: var(--pl-text-sm); font-weight: 500; text-decoration: none; cursor: pointer; position: relative; }
+.pl-navitem:hover { background: var(--pl-bg-3); color: var(--pl-fg-1); }
+.pl-navitem.is-active { background: var(--pl-bg-3); color: var(--pl-fg-1); }
+.pl-navitem.is-active::before { content: ""; position: absolute; left: -12px; top: 8px; bottom: 8px; width: 3px; border-radius: 0 3px 3px 0; background: var(--pl-accent); }
+.pl-navitem .pl-badge, .pl-navitem .pl-kbd { margin-left: auto; }
+.pl-navitem__dot { width: 18px; height: 18px; border-radius: 5px; flex: none; }
+
+/* ---------- PLC-029 Pencere başlık çubuğu ---------- */
+.pl-titlebar { height: var(--pl-titlebar-h); display: flex; align-items: center; gap: var(--pl-space-3); padding: 0 0 0 var(--pl-space-3); background: var(--pl-bg-0); border-bottom: 1px solid var(--pl-line); font-size: var(--pl-text-xs); color: var(--pl-fg-3); user-select: none; }
+.pl-titlebar__title { color: var(--pl-fg-2); font-weight: 500; }
+.pl-titlebar__center { flex: 1; display: flex; justify-content: center; }
+.pl-titlebar__search { width: min(420px, 100%); height: 26px; border-radius: var(--pl-radius-sm); background: var(--pl-bg-2); border: 1px solid var(--pl-line); display: flex; align-items: center; gap: 8px; padding: 0 8px; color: var(--pl-fg-4); }
+.pl-titlebar__search .pl-kbd { margin-left: auto; height: 18px; }
+.pl-winctl { display: flex; height: 100%; }
+.pl-winctl button { width: 44px; height: 100%; border: 0; background: transparent; color: var(--pl-fg-3); cursor: pointer; display: grid; place-items: center; }
+.pl-winctl button:hover { background: var(--pl-bg-3); color: var(--pl-fg-1); }
+.pl-winctl button:last-child:hover { background: var(--pl-winclose, #e81123); color: #fff; } /* Windows kapat düğmesi OS kuralı */
+
+/* ---------- PLC-030 Sekmeler ---------- */
+.pl-tabs { display: flex; gap: var(--pl-space-5); border-bottom: 1px solid var(--pl-line); }
+.pl-tab { position: relative; height: 38px; padding: 0 2px; border: 0; background: none; color: var(--pl-fg-3); font: inherit; font-size: var(--pl-text-sm); font-weight: 500; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.pl-tab:hover { color: var(--pl-fg-1); }
+.pl-tab.is-active { color: var(--pl-fg-1); }
+.pl-tab.is-active::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; border-radius: 2px; background: var(--pl-accent); }
+
+/* ---------- PLC-031 Yol izi / PLC-032 Sayfalama ---------- */
+.pl-breadcrumb { display: flex; align-items: center; gap: 6px; font-size: var(--pl-text-sm); color: var(--pl-fg-3); flex-wrap: wrap; }
+.pl-breadcrumb a { color: var(--pl-fg-3); text-decoration: none; } .pl-breadcrumb a:hover { color: var(--pl-fg-1); }
+.pl-breadcrumb [aria-current] { color: var(--pl-fg-1); font-weight: 500; }
+.pl-pagination { display: flex; gap: 4px; align-items: center; }
+.pl-pagination button { min-width: 30px; height: 30px; padding: 0 8px; border-radius: var(--pl-radius-sm); border: 1px solid transparent; background: transparent; color: var(--pl-fg-2); font-family: var(--pl-font-mono); font-size: var(--pl-text-xs); cursor: pointer; display: grid; place-items: center; }
+.pl-pagination button:hover { background: var(--pl-bg-3); }
+.pl-pagination button.is-active { background: var(--pl-accent-soft); color: var(--pl-accent); border-color: var(--pl-accent-line); }
+
+/* ---------- PLC-033 Komut paleti ---------- */
+.pl-cmdk { width: 100%; max-width: 560px; background: var(--pl-bg-1); border: 1px solid var(--pl-line-strong); border-radius: var(--pl-radius-xl); box-shadow: var(--pl-shadow-lg); overflow: hidden; }
+.pl-cmdk__input { display: flex; align-items: center; gap: 10px; padding: 0 var(--pl-space-4); height: 52px; border-bottom: 1px solid var(--pl-line); color: var(--pl-fg-3); }
+.pl-cmdk__input input { flex: 1; border: 0; background: transparent; color: var(--pl-fg-1); font: inherit; font-size: var(--pl-text-lg); outline: none; min-width: 0; }
+.pl-cmdk__list { padding: var(--pl-space-2); max-height: 320px; overflow: auto; }
+.pl-cmdk__group { padding: var(--pl-space-2) var(--pl-space-2) 4px; }
+.pl-cmdk__foot { display: flex; gap: var(--pl-space-4); padding: 8px var(--pl-space-4); border-top: 1px solid var(--pl-line); font-size: var(--pl-text-2xs); color: var(--pl-fg-3); background: var(--pl-bg-0); }
+.pl-cmdk__foot span { display: inline-flex; align-items: center; gap: 4px; }
+
+/* ---------- PLC-034 Menü ---------- */
+.pl-menu { min-width: 220px; padding: 6px; background: var(--pl-bg-1); border: 1px solid var(--pl-line-strong); border-radius: var(--pl-radius-md); box-shadow: var(--pl-shadow-md); }
+.pl-menuitem { display: flex; align-items: center; gap: 10px; height: 32px; padding: 0 8px; border-radius: var(--pl-radius-sm); color: var(--pl-fg-2); font-size: var(--pl-text-sm); cursor: pointer; }
+.pl-menuitem:hover, .pl-menuitem.is-active { background: var(--pl-bg-3); color: var(--pl-fg-1); }
+.pl-menuitem .pl-kbd, .pl-menuitem__meta { margin-left: auto; }
+.pl-menuitem__meta { font-size: var(--pl-text-2xs); color: var(--pl-fg-3); font-family: var(--pl-font-mono); }
+.pl-menuitem--danger { color: var(--pl-danger); } .pl-menuitem--danger:hover { background: var(--pl-danger-soft); color: var(--pl-danger); }
+.pl-menu hr { border: 0; height: 1px; background: var(--pl-line); margin: 6px 0; }
+
+/* ---------- PLC-035 Sihirbaz adımları ---------- */
+.pl-steps { display: flex; align-items: center; gap: var(--pl-space-2); }
+.pl-step { display: flex; align-items: center; gap: 8px; font-size: var(--pl-text-sm); color: var(--pl-fg-3); white-space: nowrap; }
+.pl-step__num { width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; border: 1.5px solid var(--pl-line-strong); font-family: var(--pl-font-mono); font-size: var(--pl-text-2xs); font-weight: 600; }
+.pl-step.is-done .pl-step__num { background: var(--pl-accent); border-color: var(--pl-accent); color: var(--pl-fg-on-accent); }
+.pl-step.is-current { color: var(--pl-fg-1); font-weight: 500; } .pl-step.is-current .pl-step__num { border-color: var(--pl-accent); color: var(--pl-accent); box-shadow: var(--pl-glow); }
+.pl-steps__line { flex: 1; min-width: 16px; height: 1.5px; background: var(--pl-line-strong); } .pl-steps__line.is-done { background: var(--pl-accent); }
+
+/* ---------- PLC-036 KPI kartı ---------- */
+.pl-kpi { background: var(--pl-bg-2); border: 1px solid var(--pl-line); border-radius: var(--pl-radius-lg); padding: var(--pl-space-4); display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.pl-kpi__value { font-family: var(--pl-font-mono); font-variant-numeric: tabular-nums; font-size: var(--pl-text-3xl); font-weight: 600; color: var(--pl-fg-1); line-height: 1.1; letter-spacing: -.02em; }
+.pl-kpi__delta { font-size: var(--pl-text-xs); font-weight: 600; display: inline-flex; align-items: center; gap: 4px; }
+.pl-kpi__delta.is-up { color: var(--pl-success); } .pl-kpi__delta.is-down { color: var(--pl-danger); }
+.pl-kpi--highlight { border-color: var(--pl-accent-line); background: linear-gradient(160deg, var(--pl-accent-soft), transparent 60%), var(--pl-bg-2); }
+
+/* ---------- PLC-037 Veri tablosu ---------- */
+.pl-table { width: 100%; border-collapse: collapse; font-size: var(--pl-text-sm); }
+.pl-table th { text-align: left; font-family: var(--pl-font-mono); font-size: var(--pl-text-2xs); letter-spacing: var(--pl-tracking-label); text-transform: uppercase; color: var(--pl-fg-3); font-weight: 500; padding: 10px 12px; border-bottom: 1px solid var(--pl-line); white-space: nowrap; }
+.pl-table td { padding: 10px 12px; border-bottom: 1px solid var(--pl-line); color: var(--pl-fg-2); }
+.pl-table tbody tr:hover td { background: var(--pl-bg-3); }
+.pl-table tr.is-selected td { background: var(--pl-accent-soft); }
+.pl-table .is-num { text-align: right; font-family: var(--pl-font-mono); font-variant-numeric: tabular-nums; }
+.pl-table td.is-strong { color: var(--pl-fg-1); font-weight: 500; }
+
+/* ---------- PLC-038 İlerleme çubuğu / PLC-039 Halka ---------- */
+.pl-progress { height: 6px; border-radius: var(--pl-radius-full); background: var(--pl-bg-4); overflow: hidden; }
+.pl-progress > span { display: block; height: 100%; width: var(--pl-val, 40%); border-radius: inherit; background: var(--pl-accent); transition: width var(--pl-dur-slow) var(--pl-ease-out); }
+.pl-progress--indeterminate > span { width: 35%; animation: pl-indeterminate 1.3s var(--pl-ease) infinite; }
+.pl-progress--sm { height: 3px; }
+.pl-ring { --pl-val: 64; width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; background: conic-gradient(var(--pl-accent) calc(var(--pl-val) * 1%), var(--pl-bg-4) 0); position: relative; flex: none; }
+.pl-ring::before { content: ""; position: absolute; inset: 6px; border-radius: 50%; background: var(--pl-bg-2); }
+.pl-ring > span { position: relative; font-family: var(--pl-font-mono); font-size: var(--pl-text-sm); font-weight: 600; color: var(--pl-fg-1); }
+.pl-ring--lg { width: 96px; height: 96px; } .pl-ring--lg::before { inset: 8px; } .pl-ring--lg > span { font-size: var(--pl-text-xl); }
+
+/* ---------- PLC-041 Dağılım çubuğu ---------- */
+.pl-distbar { display: flex; height: 8px; border-radius: var(--pl-radius-full); overflow: hidden; gap: 2px; }
+.pl-distbar > span { height: 100%; }
+.pl-legend { display: flex; flex-wrap: wrap; gap: var(--pl-space-3); font-size: var(--pl-text-xs); color: var(--pl-fg-2); }
+.pl-legend i { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 6px; }
+
+/* ---------- PLC-042 Zaman çizelgesi ---------- */
+.pl-timeline { list-style: none; margin: 0; padding: 0; }
+.pl-timeline li { position: relative; padding: 0 0 var(--pl-space-4) 26px; }
+.pl-timeline li::before { content: ""; position: absolute; left: 6px; top: 16px; bottom: 0; width: 1.5px; background: var(--pl-line); }
+.pl-timeline li:last-child::before { display: none; }
+.pl-timeline__dot { position: absolute; left: 0; top: 3px; width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--pl-bg-2); background: var(--pl-fg-4); box-shadow: 0 0 0 1.5px var(--pl-line-strong); }
+.pl-timeline__dot.is-accent { background: var(--pl-accent); box-shadow: 0 0 0 1.5px var(--pl-accent); }
+.pl-timeline__dot.is-success { background: var(--pl-success); box-shadow: 0 0 0 1.5px var(--pl-success); }
+.pl-timeline__dot.is-danger { background: var(--pl-danger); box-shadow: 0 0 0 1.5px var(--pl-danger); }
+.pl-timeline__title { color: var(--pl-fg-1); font-size: var(--pl-text-sm); font-weight: 500; }
+.pl-timeline__meta { color: var(--pl-fg-3); font-size: var(--pl-text-xs); font-family: var(--pl-font-mono); }
+
+/* ---------- PLC-043 Anahtar–değer listesi ---------- */
+.pl-kv { display: grid; grid-template-columns: auto 1fr; gap: 8px var(--pl-space-4); font-size: var(--pl-text-sm); margin: 0; }
+.pl-kv dt { color: var(--pl-fg-3); } .pl-kv dd { margin: 0; color: var(--pl-fg-1); text-align: right; font-weight: 500; }
+
+/* ---------- PLC-044 Boş durum ---------- */
+.pl-empty { display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--pl-space-2); padding: var(--pl-space-8) var(--pl-space-4); }
+.pl-empty__art { width: 56px; height: 56px; border-radius: var(--pl-radius-lg); display: grid; place-items: center; background: var(--pl-bg-3); border: 1px solid var(--pl-line); color: var(--pl-accent); margin-bottom: var(--pl-space-2); }
+
+/* ---------- PLC-045 Kod bloğu ---------- */
+.pl-code { background: var(--pl-bg-0); border: 1px solid var(--pl-line); border-radius: var(--pl-radius-md); overflow: hidden; }
+.pl-code__head { display: flex; align-items: center; justify-content: space-between; padding: 6px 8px 6px 12px; border-bottom: 1px solid var(--pl-line); background: var(--pl-bg-1); }
+.pl-code pre { margin: 0; padding: var(--pl-space-3); font-family: var(--pl-font-mono); font-size: var(--pl-text-xs); line-height: 1.7; color: var(--pl-fg-2); overflow: auto; }
+.pl-code .t-k { color: var(--pl-brand); } .pl-code .t-s { color: var(--pl-success); } .pl-code .t-c { color: var(--pl-fg-4); } .pl-code .t-n { color: var(--pl-gold); }
+
+/* ---------- PLC-046 Akordeon ---------- */
+.pl-accordion { border: 1px solid var(--pl-line); border-radius: var(--pl-radius-md); overflow: hidden; }
+.pl-accordion details + details { border-top: 1px solid var(--pl-line); }
+.pl-accordion summary { list-style: none; display: flex; align-items: center; justify-content: space-between; padding: 12px var(--pl-space-4); cursor: pointer; color: var(--pl-fg-1); font-weight: 500; font-size: var(--pl-text-sm); background: var(--pl-bg-2); }
+.pl-accordion summary::-webkit-details-marker { display: none; }
+.pl-accordion summary .pl-ico { transition: transform var(--pl-dur) var(--pl-ease); color: var(--pl-fg-3); }
+.pl-accordion details[open] summary .pl-ico { transform: rotate(180deg); }
+.pl-accordion details > div { padding: 0 var(--pl-space-4) var(--pl-space-4); background: var(--pl-bg-2); font-size: var(--pl-text-sm); }
+
+/* ---------- PLC-047 Uyarı kutusu ---------- */
+.pl-callout { display: flex; gap: var(--pl-space-3); padding: var(--pl-space-3) var(--pl-space-4); border-radius: var(--pl-radius-md); background: var(--pl-bg-2); border: 1px solid var(--pl-line); border-left: 3px solid var(--pl-c, var(--pl-info)); font-size: var(--pl-text-sm); }
+.pl-callout > .pl-ico { color: var(--pl-c, var(--pl-info)); margin-top: 2px; }
+.pl-callout__title { color: var(--pl-fg-1); font-weight: 600; margin-bottom: 2px; }
+.pl-callout--success { --pl-c: var(--pl-success); } .pl-callout--warning { --pl-c: var(--pl-warning); } .pl-callout--danger { --pl-c: var(--pl-danger); } .pl-callout--accent { --pl-c: var(--pl-accent); }
+
+/* ---------- PLC-048 Toast ---------- */
+.pl-toast { display: flex; align-items: center; gap: var(--pl-space-3); width: 100%; max-width: 380px; padding: 12px 12px 12px 14px; border-radius: var(--pl-radius-md); background: var(--pl-bg-1); border: 1px solid var(--pl-line-strong); box-shadow: var(--pl-shadow-lg); font-size: var(--pl-text-sm); color: var(--pl-fg-1); animation: pl-toast-in var(--pl-dur-slow) var(--pl-ease-out); }
+.pl-toast > .pl-ico { color: var(--pl-c, var(--pl-success)); }
+.pl-toast__body { flex: 1; min-width: 0; } .pl-toast__body small { display: block; color: var(--pl-fg-3); font-size: var(--pl-text-xs); }
+.pl-toast__action { background: none; border: 0; color: var(--pl-accent); font: inherit; font-weight: 600; font-size: var(--pl-text-sm); cursor: pointer; }
+
+/* ---------- PLC-049 Banner ---------- */
+.pl-banner { display: flex; align-items: center; gap: var(--pl-space-3); padding: 10px var(--pl-space-4); background: linear-gradient(90deg, var(--pl-accent-soft), transparent 70%), var(--pl-bg-1); border: 1px solid var(--pl-accent-line); border-radius: var(--pl-radius-md); font-size: var(--pl-text-sm); color: var(--pl-fg-1); flex-wrap: wrap; }
+.pl-banner > .pl-ico { color: var(--pl-accent); }
+.pl-banner__text { flex: 1; min-width: 180px; }
+
+/* ---------- PLC-050 Modal / PLC-051 Arşiv onayı / PLC-052 Çekmece ---------- */
+.pl-modal { width: 100%; max-width: 440px; background: var(--pl-bg-1); border: 1px solid var(--pl-line-strong); border-radius: var(--pl-radius-xl); box-shadow: var(--pl-shadow-lg); padding: 0; color: var(--pl-fg-2); }
+.pl-modal::backdrop { background: var(--pl-overlay); backdrop-filter: blur(4px); }
+.pl-modal__head { display: flex; align-items: flex-start; gap: var(--pl-space-3); padding: var(--pl-space-5) var(--pl-space-5) var(--pl-space-2); }
+.pl-modal__icon { width: 40px; height: 40px; border-radius: var(--pl-radius-md); display: grid; place-items: center; flex: none; background: var(--pl-accent-soft); color: var(--pl-accent); }
+.pl-modal__icon.is-warning { background: var(--pl-warning-soft); color: var(--pl-warning); }
+.pl-modal__body { padding: 0 var(--pl-space-5) var(--pl-space-4); font-size: var(--pl-text-sm); }
+.pl-modal__foot { display: flex; justify-content: flex-end; gap: var(--pl-space-2); padding: var(--pl-space-3) var(--pl-space-5); border-top: 1px solid var(--pl-line); background: var(--pl-bg-0); border-radius: 0 0 var(--pl-radius-xl) var(--pl-radius-xl); }
+.pl-drawer { width: 100%; max-width: 360px; height: 100%; background: var(--pl-bg-1); border-left: 1px solid var(--pl-line-strong); box-shadow: var(--pl-shadow-lg); display: flex; flex-direction: column; }
+.pl-drawer__head { display: flex; align-items: center; justify-content: space-between; padding: var(--pl-space-4); border-bottom: 1px solid var(--pl-line); }
+.pl-drawer__body { flex: 1; padding: var(--pl-space-4); overflow: auto; }
+.pl-drawer__foot { padding: var(--pl-space-3) var(--pl-space-4); border-top: 1px solid var(--pl-line); display: flex; gap: var(--pl-space-2); justify-content: flex-end; }
+
+/* ---------- Ürün: logo karosu ---------- */
+.pl-applogo { width: 40px; height: 40px; border-radius: var(--pl-radius-md); display: grid; place-items: center; flex: none; background: linear-gradient(140deg, var(--pl-accent), color-mix(in srgb, var(--pl-accent) 45%, var(--pl-bg-0))); color: var(--pl-fg-on-accent); font-weight: 800; font-size: 15px; letter-spacing: -.02em; box-shadow: inset 0 1px 0 rgb(255 255 255 / .25); }
+.pl-applogo--sm { width: 28px; height: 28px; border-radius: 8px; font-size: 11px; } .pl-applogo--lg { width: 56px; height: 56px; border-radius: var(--pl-radius-lg); font-size: 20px; }
+
+/* ---------- PLC-053 Uygulama kartı (Hub katalog) ---------- */
+.pl-appcard { display: flex; flex-direction: column; gap: var(--pl-space-3); background: var(--pl-bg-2); border: 1px solid var(--pl-line); border-radius: var(--pl-radius-lg); padding: var(--pl-space-4); transition: border-color var(--pl-dur), transform var(--pl-dur) var(--pl-ease); min-width: 0; }
+.pl-appcard:hover { border-color: var(--pl-accent-line); transform: translateY(-2px); }
+.pl-appcard__head { display: flex; gap: var(--pl-space-3); align-items: center; }
+.pl-appcard__name { color: var(--pl-fg-1); font-weight: 600; font-size: var(--pl-text-md); }
+.pl-appcard__desc { font-size: var(--pl-text-sm); color: var(--pl-fg-3); margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.pl-appcard__foot { display: flex; align-items: center; justify-content: space-between; gap: var(--pl-space-2); margin-top: auto; }
+
+/* ---------- PLC-054 Kurulum satırı ---------- */
+.pl-installrow { display: flex; align-items: center; gap: var(--pl-space-3); padding: var(--pl-space-3); border-radius: var(--pl-radius-md); background: var(--pl-bg-2); border: 1px solid var(--pl-line); }
+.pl-installrow__main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+.pl-installrow__top { display: flex; justify-content: space-between; gap: 8px; font-size: var(--pl-text-sm); color: var(--pl-fg-1); font-weight: 500; }
+
+/* ---------- PLC-055 Eklenti popup ---------- */
+.pl-popup { width: var(--pl-popup-w); max-width: 100%; background: var(--pl-bg-1); border: 1px solid var(--pl-line); border-radius: var(--pl-radius-lg); overflow: hidden; display: flex; flex-direction: column; }
+.pl-popup__head { display: flex; align-items: center; gap: 10px; padding: 12px; border-bottom: 1px solid var(--pl-line); }
+.pl-popup__title { flex: 1; min-width: 0; } .pl-popup__title b { display: block; color: var(--pl-fg-1); font-size: var(--pl-text-sm); }
+.pl-popup__body { padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+.pl-popup__foot { display: flex; gap: 8px; padding: 10px 12px; border-top: 1px solid var(--pl-line); background: var(--pl-bg-0); }
+
+/* ---------- PLC-056 İzin isteği ---------- */
+.pl-perm { display: flex; flex-direction: column; gap: var(--pl-space-3); padding: var(--pl-space-4); border-radius: var(--pl-radius-lg); background: var(--pl-bg-2); border: 1px solid var(--pl-line); }
+.pl-perm ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.pl-perm li { display: flex; gap: 10px; font-size: var(--pl-text-sm); color: var(--pl-fg-2); align-items: flex-start; }
+.pl-perm li .pl-ico { color: var(--pl-accent); margin-top: 2px; }
+
+/* ---------- PLC-057 Liste satırı (genel) ---------- */
+.pl-listrow { display: flex; align-items: center; gap: var(--pl-space-3); padding: 10px var(--pl-space-3); border-radius: var(--pl-radius-md); transition: background var(--pl-dur-fast); }
+.pl-listrow:hover { background: var(--pl-bg-3); }
+.pl-listrow + .pl-listrow { border-top: 1px solid var(--pl-line); border-radius: 0; }
+.pl-listrow__main { flex: 1; min-width: 0; }
+.pl-listrow__title { color: var(--pl-fg-1); font-size: var(--pl-text-sm); font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pl-listrow__sub { color: var(--pl-fg-3); font-size: var(--pl-text-xs); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pl-listrow.is-disabled .pl-listrow__title { color: var(--pl-fg-3); }
+
+/* ---------- PLC-058 Ürün kartı (fiyat) ---------- */
+.pl-product { display: flex; flex-direction: column; background: var(--pl-bg-2); border: 1px solid var(--pl-line); border-radius: var(--pl-radius-lg); overflow: hidden; min-width: 0; }
+.pl-product__img { aspect-ratio: 4 / 3; background: radial-gradient(circle at 30% 30%, color-mix(in srgb, var(--pl-accent) 30%, var(--pl-bg-3)), var(--pl-bg-3) 70%); position: relative; display: grid; place-items: center; color: var(--pl-fg-3); }
+.pl-product__img .pl-iconbtn { position: absolute; top: 8px; right: 8px; background: color-mix(in srgb, var(--pl-bg-0) 70%, transparent); backdrop-filter: blur(6px); }
+.pl-product__body { padding: 12px; display: flex; flex-direction: column; gap: 6px; }
+.pl-product__title { color: var(--pl-fg-1); font-size: var(--pl-text-sm); font-weight: 500; }
+.pl-price { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.pl-price__now { font-family: var(--pl-font-mono); font-size: var(--pl-text-xl); font-weight: 700; color: var(--pl-gold); }
+.pl-price__old { font-family: var(--pl-font-mono); font-size: var(--pl-text-xs); color: var(--pl-fg-4); text-decoration: line-through; }
+
+/* ---------- PLC-059 AI mesaj balonu / PLC-060 Kompozitör ---------- */
+.pl-msg { display: flex; gap: 10px; align-items: flex-start; }
+.pl-msg__bubble { padding: 10px 14px; border-radius: 14px; font-size: var(--pl-text-sm); line-height: 1.55; max-width: 85%; }
+.pl-msg--user { flex-direction: row-reverse; } .pl-msg--user .pl-msg__bubble { background: var(--pl-bg-4); color: var(--pl-fg-1); border-top-right-radius: 4px; }
+.pl-msg--ai .pl-msg__bubble { background: var(--pl-bg-2); border: 1px solid var(--pl-line); color: var(--pl-fg-2); border-top-left-radius: 4px; }
+.pl-msg__meta { display: flex; gap: 6px; margin-top: 8px; align-items: center; }
+.pl-typing { display: inline-flex; gap: 4px; } .pl-typing i { width: 6px; height: 6px; border-radius: 50%; background: var(--pl-fg-3); animation: pl-bounce 1.2s infinite; } .pl-typing i:nth-child(2) { animation-delay: .15s; } .pl-typing i:nth-child(3) { animation-delay: .3s; }
+.pl-composer { border: 1px solid var(--pl-line-strong); border-radius: var(--pl-radius-lg); background: var(--pl-bg-2); padding: 10px; display: flex; flex-direction: column; gap: 8px; transition: border-color var(--pl-dur), box-shadow var(--pl-dur); }
+.pl-composer:focus-within { border-color: var(--pl-accent); box-shadow: var(--pl-glow); }
+.pl-composer textarea { border: 0; background: transparent; resize: none; color: var(--pl-fg-1); font: inherit; font-size: var(--pl-text-sm); min-height: 44px; outline: none; }
+.pl-composer__bar { display: flex; align-items: center; gap: 4px; }
+.pl-composer__send { margin-left: auto; width: 32px; height: 32px; border-radius: 50%; border: 0; background: var(--pl-accent); color: var(--pl-fg-on-accent); display: grid; place-items: center; cursor: pointer; }
+
+/* ---------- PLC-061 Dock (Flow Dock) ---------- */
+.pl-dock { display: inline-flex; align-items: flex-end; gap: 6px; padding: 8px; border-radius: 20px; background: color-mix(in srgb, var(--pl-bg-1) 80%, transparent); border: 1px solid var(--pl-line-strong); backdrop-filter: blur(16px); box-shadow: var(--pl-shadow-lg); }
+.pl-dock__item { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; background: var(--pl-bg-3); color: var(--pl-fg-1); position: relative; transition: transform var(--pl-dur) var(--pl-ease-out); cursor: pointer; }
+.pl-dock__item:hover { transform: translateY(-6px) scale(1.12); }
+.pl-dock__item.is-running::after { content: ""; position: absolute; bottom: -5px; width: 4px; height: 4px; border-radius: 50%; background: var(--pl-accent); }
+.pl-dock__sep { width: 1px; height: 32px; background: var(--pl-line-strong); margin: 0 4px 6px; }
+
+/* ---------- PLC-062 Sistem metrik karosu (Tweakster) ---------- */
+.pl-metric { display: flex; align-items: center; gap: var(--pl-space-4); padding: var(--pl-space-4); background: var(--pl-bg-2); border: 1px solid var(--pl-line); border-radius: var(--pl-radius-lg); }
+.pl-metric__info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+
+/* ---------- PLC-063 Tarif kartı ---------- */
+.pl-recipe { display: grid; grid-template-columns: 96px 1fr; gap: var(--pl-space-3); padding: 10px; background: var(--pl-bg-2); border: 1px solid var(--pl-line); border-radius: var(--pl-radius-lg); }
+.pl-recipe__img { border-radius: var(--pl-radius-md); background: radial-gradient(circle at 40% 35%, color-mix(in srgb, var(--pl-accent) 55%, transparent), var(--pl-bg-3) 72%); min-height: 96px; }
+.pl-recipe__meta { display: flex; gap: var(--pl-space-3); font-size: var(--pl-text-xs); color: var(--pl-fg-3); flex-wrap: wrap; }
+.pl-recipe__meta span { display: inline-flex; align-items: center; gap: 4px; }
+
+/* ---------- PLC-064 Çıkarım kartı (Leo Helper) ---------- */
+.pl-extract { padding: var(--pl-space-3); background: var(--pl-bg-2); border: 1px solid var(--pl-line); border-radius: var(--pl-radius-lg); display: flex; flex-direction: column; gap: 10px; }
+.pl-extract__code { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 8px 8px 12px; border-radius: var(--pl-radius-sm); background: var(--pl-bg-0); border: 1px dashed var(--pl-accent-line); font-family: var(--pl-font-mono); font-size: var(--pl-text-lg); font-weight: 600; letter-spacing: .08em; color: var(--pl-accent); }
+
+/* ---------- PLC-065 Not kartı (Mind Palace) ---------- */
+.pl-note { padding: var(--pl-space-4); background: var(--pl-bg-2); border: 1px solid var(--pl-line); border-radius: var(--pl-radius-lg); display: flex; flex-direction: column; gap: 8px; position: relative; overflow: hidden; }
+.pl-note::before { content: ""; position: absolute; inset: 0 0 auto; height: 3px; background: var(--pl-accent); }
+.pl-note p { margin: 0; font-size: var(--pl-text-sm); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+/* ---------- PLC-066 Ayar satırı ---------- */
+.pl-setting { display: flex; align-items: center; gap: var(--pl-space-4); padding: var(--pl-space-3) 0; }
+.pl-setting + .pl-setting { border-top: 1px solid var(--pl-line); }
+.pl-setting__text { flex: 1; min-width: 0; } .pl-setting__text b { display: block; color: var(--pl-fg-1); font-size: var(--pl-text-sm); font-weight: 500; }
+
+/* ---------- PLC-067 Karşılama kahramanı ---------- */
+.pl-hero { position: relative; overflow: hidden; border-radius: var(--pl-radius-xl); padding: var(--pl-space-8) var(--pl-space-6); background: radial-gradient(600px 240px at 85% -20%, color-mix(in srgb, var(--pl-brand) 35%, transparent), transparent), radial-gradient(400px 200px at 0% 120%, color-mix(in srgb, var(--pl-brand-2) 22%, transparent), transparent), var(--pl-bg-1); border: 1px solid var(--pl-line); }
+.pl-hero__title { font-size: var(--pl-text-4xl); font-weight: 700; color: var(--pl-fg-1); line-height: 1.1; letter-spacing: -.02em; margin: 8px 0; }
+.pl-hero__title em { font-style: normal; background: var(--pl-brand-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* ---------- PLC-068 Plan kartı ---------- */
+.pl-plan { padding: var(--pl-space-5); border-radius: var(--pl-radius-xl); background: var(--pl-bg-2); border: 1px solid var(--pl-line); display: flex; flex-direction: column; gap: var(--pl-space-3); }
+.pl-plan.is-featured { border-color: color-mix(in srgb, var(--pl-gold) 45%, transparent); background: linear-gradient(170deg, color-mix(in srgb, var(--pl-gold) 10%, transparent), transparent 50%), var(--pl-bg-2); }
+.pl-plan__price { font-family: var(--pl-font-mono); font-size: var(--pl-text-3xl); font-weight: 700; color: var(--pl-fg-1); }
+.pl-plan ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: var(--pl-text-sm); }
+.pl-plan li { display: flex; gap: 8px; align-items: center; } .pl-plan li .pl-ico { color: var(--pl-success); }
+
+/* ---------- Yardımcı: ızgara ---------- */
+.pl-grid { display: grid; gap: var(--pl-space-4); grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr)); }
+
+/* ---------- Animasyonlar ---------- */
+@keyframes pl-spin { to { transform: rotate(360deg); } }
+@keyframes pl-pulse { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+@keyframes pl-shimmer { to { background-position: -200% 0; } }
+@keyframes pl-indeterminate { 0% { transform: translateX(-100%); } 100% { transform: translateX(300%); } }
+@keyframes pl-toast-in { from { opacity: 0; transform: translateY(8px) scale(.98); } }
+@keyframes pl-bounce { 0%, 60%, 100% { transform: translateY(0); opacity: .5; } 30% { transform: translateY(-4px); opacity: 1; } }
+
+} /* @layer pl */

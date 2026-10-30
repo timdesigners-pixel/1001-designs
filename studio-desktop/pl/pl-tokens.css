@@ -1,0 +1,137 @@
+/* ==========================================================================
+   PluginLabs Design System — Tokenlar (pl-tokens.css)  v1.0.0 · 30.10.2026
+   --------------------------------------------------------------------------
+   KAPSÜL KURALI: Bu dosya mevcut uygulamalara DOKUNMAZ.
+   - Global reset yok, element seçici yok, :root'a yazılmaz.
+   - Tüm değişkenler --pl- önekli, yalnız [data-pl] kapsayıcısı içinde geçerli.
+   - @layer pl içinde; uygulamanın kendi CSS'i her zaman önceliklidir.
+   Kullanım:  <div data-pl data-pl-theme="dark" data-pl-product="leo"> … </div>
+   ========================================================================== */
+
+@layer pl {
+
+/* ---------- 1. TEMEL (KARANLIK — VARSAYILAN) ---------- */
+:where([data-pl]) {
+  /* Zemin katmanları (elevation = renk, gölge değil) */
+  --pl-bg-0: #090d18;          /* uygulama zemini          */
+  --pl-bg-1: #0e1322;          /* ana yüzey / panel        */
+  --pl-bg-2: #141a2c;          /* kart                     */
+  --pl-bg-3: #1b2238;          /* hover / input zemini     */
+  --pl-bg-4: #232b45;          /* aktif / seçili           */
+  --pl-overlay: rgb(4 7 15 / .72);
+
+  /* Çizgiler */
+  --pl-line: #232c44;
+  --pl-line-strong: #323d5c;
+  --pl-line-focus: var(--pl-accent);
+
+  /* Metin */
+  --pl-fg-1: #f2f5fb;          /* başlık / birincil        */
+  --pl-fg-2: #b6c0d4;          /* gövde                    */
+  --pl-fg-3: #7b869c;          /* yardımcı / etiket        */
+  --pl-fg-4: #566078;          /* pasif                    */
+  --pl-fg-on-accent: #0a0e1a;
+
+  /* Marka */
+  --pl-brand: #7c6cff;         /* PL Iris                  */
+  --pl-brand-2: #22d3ee;       /* PL Cyan                  */
+  --pl-gold: #f0b429;          /* Pro / premium / tutar    */
+  --pl-brand-gradient: linear-gradient(135deg, #7c6cff 0%, #4f8bff 50%, #22d3ee 100%);
+
+  /* Anlamsal */
+  --pl-success: #34d399;  --pl-success-soft: rgb(52 211 153 / .14);
+  --pl-warning: #fbbf24;  --pl-warning-soft: rgb(251 191 36 / .14);
+  --pl-danger:  #f87171;  --pl-danger-soft:  rgb(248 113 113 / .14);
+  --pl-info:    #60a5fa;  --pl-info-soft:    rgb(96 165 250 / .14);
+
+  /* Ürün aksanı (varsayılan = Hub) */
+  --pl-accent: var(--pl-brand);
+  --pl-accent-soft: color-mix(in srgb, var(--pl-accent) 16%, transparent);
+  --pl-accent-line: color-mix(in srgb, var(--pl-accent) 45%, transparent);
+
+  /* Tipografi */
+  --pl-font-sans: "Inter", "Segoe UI Variable", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --pl-font-mono: "JetBrains Mono", "Cascadia Code", ui-monospace, "SFMono-Regular", monospace;
+  --pl-text-2xs: 11px;  --pl-text-xs: 12px;  --pl-text-sm: 13px;  --pl-text-md: 14px;
+  --pl-text-lg: 16px;   --pl-text-xl: 18px;  --pl-text-2xl: 22px; --pl-text-3xl: 28px;
+  --pl-text-4xl: 36px;  --pl-text-5xl: 48px;
+  --pl-leading-tight: 1.2; --pl-leading: 1.5; --pl-leading-loose: 1.7;
+  --pl-tracking-label: .08em;
+  --pl-weight-regular: 400; --pl-weight-medium: 500; --pl-weight-semibold: 600; --pl-weight-bold: 700;
+
+  /* Boşluk (4px ızgara) */
+  --pl-space-0: 0;    --pl-space-0_5: 2px; --pl-space-1: 4px;  --pl-space-2: 8px;
+  --pl-space-3: 12px; --pl-space-4: 16px;  --pl-space-5: 20px; --pl-space-6: 24px;
+  --pl-space-8: 32px; --pl-space-10: 40px; --pl-space-12: 48px; --pl-space-16: 64px;
+
+  /* Köşe */
+  --pl-radius-xs: 4px; --pl-radius-sm: 6px; --pl-radius-md: 10px;
+  --pl-radius-lg: 14px; --pl-radius-xl: 20px; --pl-radius-full: 999px;
+
+  /* Kontrol boyutları */
+  --pl-control-sm: 28px; --pl-control-md: 34px; --pl-control-lg: 42px;
+
+  /* Gölge (yalnız yüzen öğeler) */
+  --pl-shadow-sm: 0 1px 2px rgb(0 0 0 / .35);
+  --pl-shadow-md: 0 8px 24px rgb(0 0 0 / .40), 0 0 0 1px var(--pl-line);
+  --pl-shadow-lg: 0 24px 64px rgb(0 0 0 / .55), 0 0 0 1px var(--pl-line);
+  --pl-glow: 0 0 0 3px var(--pl-accent-soft);
+
+  /* Hareket */
+  --pl-ease: cubic-bezier(.2, .8, .2, 1);
+  --pl-ease-out: cubic-bezier(.16, 1, .3, 1);
+  --pl-dur-fast: 120ms; --pl-dur: 180ms; --pl-dur-slow: 280ms;
+
+  /* Katman sırası */
+  --pl-z-base: 0; --pl-z-sticky: 10; --pl-z-dropdown: 100; --pl-z-drawer: 200;
+  --pl-z-modal: 300; --pl-z-toast: 400; --pl-z-tooltip: 500;
+
+  /* Yerleşim */
+  --pl-sidebar-w: 248px; --pl-titlebar-h: 40px; --pl-popup-w: 380px; --pl-popup-h: 560px;
+  --pl-sidepanel-w: 400px; --pl-content-max: 1200px;
+
+  color-scheme: dark;
+}
+
+/* ---------- 2. AÇIK TEMA ---------- */
+:where([data-pl][data-pl-theme="light"]), :where([data-pl-theme="light"] [data-pl]) {
+  --pl-bg-0: #f4f6fb; --pl-bg-1: #ffffff; --pl-bg-2: #ffffff; --pl-bg-3: #eef1f7; --pl-bg-4: #e3e8f2;
+  --pl-overlay: rgb(15 20 36 / .45);
+  --pl-line: #e2e6ef; --pl-line-strong: #cdd3e0;
+  --pl-fg-1: #0e1424; --pl-fg-2: #3b4458; --pl-fg-3: #67718a; --pl-fg-4: #9aa3b8;
+  --pl-fg-on-accent: #0a0e1a;   /* ürün aksanları parlak: açık temada da koyu metin */
+  --pl-brand: #5b4bff; --pl-brand-2: #0891b2; --pl-gold: #c48a06;
+  --pl-success: #059669; --pl-warning: #b45309; --pl-danger: #dc2626; --pl-info: #2563eb;
+  --pl-shadow-md: 0 8px 24px rgb(15 20 36 / .10), 0 0 0 1px var(--pl-line);
+  --pl-shadow-lg: 0 24px 64px rgb(15 20 36 / .18), 0 0 0 1px var(--pl-line);
+  color-scheme: light;
+}
+
+/* ---------- 3. ÜRÜN AKSANLARI ---------- */
+:where([data-pl-product="hub"])        { --pl-accent: #7c6cff; }
+:where([data-pl-product="leo"])        { --pl-accent: #22d3ee; }  /* Leo Helper          */
+:where([data-pl-product="mindpalace"]) { --pl-accent: #a78bfa; }  /* Mind Palace         */
+:where([data-pl-product="replicator"]) { --pl-accent: #f472b6; }  /* Design Replicator   */
+:where([data-pl-product="mutfak"])     { --pl-accent: #fb923c; }  /* Mutfak Atölyesi     */
+:where([data-pl-product="flowdock"])   { --pl-accent: #2dd4bf; }  /* Flow Dock           */
+:where([data-pl-product="tweakster"])  { --pl-accent: #a3e635; }  /* Tweakster           */
+:where([data-pl-product="extman"])     { --pl-accent: #60a5fa; }  /* Extension Manager   */
+:where([data-pl-product="mymind"])     { --pl-accent: #f0b429; }  /* MyMind (AI)         */
+:where([data-pl-product="scrapper"])   { --pl-accent: #f87171; }  /* The Ultimate Scrapper */
+:where([data-pl-product="wishlist"])   { --pl-accent: #fb7185; }  /* MyWishlist (PL-054) */
+
+/* ---------- 4. YOĞUNLUK ---------- */
+:where([data-pl-density="compact"]) {   /* eklenti popup / yan panel */
+  --pl-control-sm: 24px; --pl-control-md: 30px; --pl-control-lg: 36px;
+  --pl-text-md: 13px; --pl-space-4: 12px; --pl-space-6: 18px;
+}
+
+/* ---------- 5. ERİŞİLEBİLİRLİK ---------- */
+@media (prefers-reduced-motion: reduce) {
+  :where([data-pl]) { --pl-dur-fast: 0ms; --pl-dur: 0ms; --pl-dur-slow: 0ms; }
+}
+@media (prefers-contrast: more) {
+  :where([data-pl]) { --pl-line: #46526f; --pl-fg-2: #d8deea; --pl-fg-3: #a9b2c6; }
+}
+
+} /* @layer pl */

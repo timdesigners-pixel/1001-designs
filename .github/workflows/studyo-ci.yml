@@ -1,0 +1,27 @@
+name: Stüdyo CI
+# Binbir Dizayn Stüdyo (masaüstü) — birim testleri ve gerçek Electron penceresiyle duman testi (Linux, xvfb).
+# Yalnız masaüstü uygulamasının dosyaları değişince çalışır; design-replicator eklentisinin kendi testleri ayrıdır.
+on:
+  pull_request:
+    paths: ['desktop/**', 'studio-desktop/**', 'tests/**', 'package.json', 'package-lock.json', 'design-replicator/dataset/**', '.github/workflows/studyo-*.yml']
+  push:
+    branches: [main]
+    paths: ['desktop/**', 'studio-desktop/**', 'tests/**', 'package.json', 'package-lock.json', 'design-replicator/dataset/**', '.github/workflows/studyo-*.yml']
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - name: Masaüstü duman testi (Electron, xvfb)
+        run: |
+          npm install --no-save playwright@1.49.1
+          PLAYWRIGHT_MODULE=playwright xvfb-run -a node tests/desktop-smoke.cjs

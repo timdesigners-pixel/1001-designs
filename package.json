@@ -1,0 +1,51 @@
+{
+  "name": "binbir-dizayn-studyo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "PL-010 1001 Designs — Binbir Dizayn Stüdyo Windows uygulaması: 1001 bileşenlik kütüphaneyi çevrimdışı gezme, canlı önizleme, kod kopyalama, tek dosya HTML dışa aktarma, görselden renk paleti",
+  "scripts": {
+    "test": "node --test tests/*.test.mjs",
+    "start": "electron .",
+    "build:win": "electron-builder --win nsis portable --x64 --publish never",
+    "smoke": "node tests/desktop-smoke.cjs"
+  },
+  "main": "desktop/main.js",
+  "author": "PluginLabs",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "33.2.1",
+    "electron-builder": "25.1.8"
+  },
+  "build": {
+    "appId": "com.pluginlabs.binbir-dizayn-studyo",
+    "productName": "Binbir Dizayn Stüdyo",
+    "copyright": "PluginLabs",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "desktop/**",
+      "studio-desktop/**",
+      "design-replicator/dataset/components.json",
+      "design-replicator/dataset/meta.json",
+      "design-replicator/icons/icon128.png",
+      "package.json"
+    ],
+    "win": {
+      "icon": "desktop/icon.ico",
+      "target": [
+        "nsis",
+        "portable"
+      ],
+      "artifactName": "BinbirDizaynStudyo-${version}-Windows-${arch}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": false
+    },
+    "portable": {
+      "artifactName": "BinbirDizaynStudyo-${version}-Windows-Portable-${arch}.${ext}"
+    }
+  }
+}
